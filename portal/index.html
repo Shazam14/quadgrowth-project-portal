@@ -186,9 +186,96 @@ h1 em {
   from { opacity: 0; transform: translateY(14px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+/* ── PASSWORD OVERLAY ── */
+#pw-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: var(--navy-dark);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+#pw-overlay .logo { margin-bottom: 32px; opacity: 1; animation: none; }
+
+#pw-input {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: var(--cream);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  padding: 12px 20px;
+  width: 260px;
+  outline: none;
+  text-align: center;
+  letter-spacing: 2px;
+}
+
+#pw-input:focus { border-color: rgba(200,150,62,0.5); }
+
+#pw-btn {
+  background: var(--gold);
+  border: none;
+  border-radius: 8px;
+  color: var(--navy-dark);
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  padding: 12px 32px;
+  text-transform: uppercase;
+  transition: background 0.2s;
+  width: 260px;
+}
+
+#pw-btn:hover { background: var(--gold-lt); }
+
+#pw-error {
+  color: #e57373;
+  font-size: 12px;
+  height: 16px;
+}
 </style>
 </head>
 <body>
+
+<div id="pw-overlay">
+  <div class="logo">Quad<span>Growth</span></div>
+  <input id="pw-input" type="password" placeholder="Enter password" />
+  <div id="pw-error"></div>
+  <button id="pw-btn">Enter Portal</button>
+</div>
+
+<script>
+  (function () {
+    const PASS = 'qgsuccess';
+    const overlay = document.getElementById('pw-overlay');
+    const input = document.getElementById('pw-input');
+    const btn = document.getElementById('pw-btn');
+    const error = document.getElementById('pw-error');
+
+    if (sessionStorage.getItem('qg_auth') === '1') overlay.remove();
+
+    function attempt() {
+      if (input.value === PASS) {
+        sessionStorage.setItem('qg_auth', '1');
+        overlay.remove();
+      } else {
+        error.textContent = 'Incorrect password.';
+        input.value = '';
+        input.focus();
+      }
+    }
+
+    btn.addEventListener('click', attempt);
+    input.addEventListener('keydown', e => { if (e.key === 'Enter') attempt(); });
+  })();
+</script>
 
 <div class="logo">Quad<span>Growth</span></div>
 
