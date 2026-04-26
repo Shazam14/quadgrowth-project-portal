@@ -74,4 +74,52 @@ test.describe("CGM — /hub/persona-coach (AI Persona Coach)", () => {
     await expect(page.locator("[data-testid='persona-coach-end']")).toHaveCount(0);
     await expect(page.locator("[data-testid='persona-coach-mic']")).toHaveCount(0);
   });
+
+  test("Score this session renders pill metrics + summary after End", async ({ page }) => {
+    await page.route("**/api/persona-coach", async (route) => {
+      await route.fulfill({
+        status: 200,
+        contentType: "text/plain; charset=utf-8",
+        body: "Walk me through the numbers.",
+      });
+    });
+    await page.route("**/api/score-session", async (route) => {
+      await route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: JSON.stringify({
+          metrics: { clarity: 7, relevance: 8, objection_handling: 6, rapport: 5, cta_strength: 4 },
+          overall: 6,
+          strengths: ["Opened with a clear reason", "Stayed calm under pushback"],
+          improvements: ["Land a sharper CTA", "Tighten value-prop framing"],
+          suggested_rewrite: "If I can prove ROI in 30 days, would you take a paid pilot?",
+          summary: "Solid discovery. Needs a tighter ask at the end to convert.",
+        }),
+      });
+    });
+
+    await page.goto("/hub/persona-coach");
+    await page.locator("[data-testid='persona-card'][data-persona-id='marcus-chen']").click();
+    await page.locator("[data-testid='persona-coach-start']").click();
+    await page.locator("[data-testid='persona-coach-input']").fill("Hi Marcus, brief reason for the call.");
+    await page.locator("[data-testid='persona-coach-submit']").click();
+    await expect(page.locator("[data-testid='persona-coach-transcript']")).toContainText(
+      /Walk me through the numbers/,
+    );
+
+    await page.locator("[data-testid='persona-coach-end']").click();
+
+    const scoreBtn = page.locator("[data-testid='persona-coach-score']");
+    await expect(scoreBtn).toBeVisible();
+    await scoreBtn.click();
+
+    const card = page.locator("[data-testid='persona-coach-scorecard']");
+    await expect(card).toBeVisible();
+    await expect(page.locator("[data-testid='persona-coach-scorecard-overall']")).toContainText("6");
+    await expect(page.locator("[data-testid='persona-coach-scorecard-summary']")).toContainText(
+      /tighter ask at the end/,
+    );
+    await expect(card).toContainText("Land a sharper CTA");
+    await expect(card).toContainText("If I can prove ROI in 30 days");
+  });
 });

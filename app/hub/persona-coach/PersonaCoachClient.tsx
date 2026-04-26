@@ -22,6 +22,29 @@ type PersonaSummary = {
 type Msg = { role: "user" | "assistant"; content: string };
 type Phase = "idle" | "active" | "ended";
 
+type Scorecard = {
+  metrics: {
+    clarity: number;
+    relevance: number;
+    objection_handling: number;
+    rapport: number;
+    cta_strength: number;
+  };
+  overall: number;
+  strengths: string[];
+  improvements: string[];
+  suggested_rewrite: string;
+  summary: string;
+};
+
+const METRIC_LABELS: { key: keyof Scorecard["metrics"]; label: string }[] = [
+  { key: "clarity", label: "Clarity" },
+  { key: "relevance", label: "Relevance" },
+  { key: "objection_handling", label: "Objections" },
+  { key: "rapport", label: "Rapport" },
+  { key: "cta_strength", label: "CTA" },
+];
+
 const DIFFICULTY_LABEL: Record<Difficulty, string> = {
   hardest: "Hardest",
   medium: "Medium",
@@ -36,6 +59,9 @@ export default function PersonaCoachClient({ personas }: { personas: PersonaSumm
   const [streaming, setStreaming] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [score, setScore] = useState<Scorecard | null>(null);
+  const [scoring, setScoring] = useState(false);
+  const [scoreError, setScoreError] = useState<string | null>(null);
   const tts = useBrowserTts();
   const stt = useBrowserStt();
   const sttBaseRef = useRef("");
@@ -101,6 +127,8 @@ export default function PersonaCoachClient({ personas }: { personas: PersonaSumm
     setHistory([]);
     setStreaming("");
     setError(null);
+    setScore(null);
+    setScoreError(null);
     setPhase("idle");
   }
 
@@ -111,6 +139,8 @@ export default function PersonaCoachClient({ personas }: { personas: PersonaSumm
     setHistory([]);
     setStreaming("");
     setError(null);
+    setScore(null);
+    setScoreError(null);
     setPhase("idle");
   }
 
@@ -120,6 +150,8 @@ export default function PersonaCoachClient({ personas }: { personas: PersonaSumm
     setHistory([opener]);
     setStreaming("");
     setError(null);
+    setScore(null);
+    setScoreError(null);
     setPhase("active");
     void tts.speak(activePersona.opener);
   }
@@ -128,6 +160,31 @@ export default function PersonaCoachClient({ personas }: { personas: PersonaSumm
     tts.stop();
     stt.stop();
     setPhase("ended");
+  }
+
+  async function scoreSession() {
+    if (scoring || !activePersona) return;
+    if (!history.some((m) => m.role === "user")) return;
+    setScoring(true);
+    setScoreError(null);
+    try {
+      const res = await fetch("/api/score-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          context: "persona-coach",
+          personaName: activePersona.name,
+          messages: history,
+        }),
+      });
+      if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+      const card = (await res.json()) as Scorecard;
+      setScore(card);
+    } catch (err) {
+      setScoreError(err instanceof Error ? err.message : String(err));
+    } finally {
+      setScoring(false);
+    }
   }
 
   function statusText() {
@@ -307,6 +364,90 @@ export default function PersonaCoachClient({ personas }: { personas: PersonaSumm
               </p>
             )}
           </form>
+
+          {phase === "ended" && history.some((m) => m.role === "user") && !score && (
+            <div className="persona-coach__scorebar">
+              <button
+                type="button"
+                className="persona-coach__score-btn"
+                onClick={scoreSession}
+                disabled={scoring}
+                data-testid="persona-coach-score"
+              >
+                {scoring ? "Scoring…" : "★ Score this session"}
+              </button>
+              {scoreError && (
+                <p className="persona-coach__error" data-testid="persona-coach-score-error">
+                  Error: {scoreError}
+                </p>
+              )}
+            </div>
+          )}
+
+          {score && (
+            <section className="persona-coach__scorecard" data-testid="persona-coach-scorecard">
+              <header className="persona-coach__scorecard-header">
+                <span className="persona-coach__scorecard-eyebrow">Session score</span>
+                <span
+                  className="persona-coach__scorecard-overall"
+                  data-testid="persona-coach-scorecard-overall"
+                >
+                  {score.overall}
+                  <span className="persona-coach__scorecard-overall-suffix">/10</span>
+                </span>
+              </header>
+
+              <ul className="persona-coach__scorecard-metrics">
+                {METRIC_LABELS.map(({ key, label }) => (
+                  <li key={key} className="persona-coach__scorecard-pill">
+                    <span className="persona-coach__scorecard-pill-label">{label}</span>
+                    <span className="persona-coach__scorecard-pill-value">
+                      {score.metrics[key]}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+
+              {score.summary && (
+                <p
+                  className="persona-coach__scorecard-summary"
+                  data-testid="persona-coach-scorecard-summary"
+                >
+                  {score.summary}
+                </p>
+              )}
+
+              <div className="persona-coach__scorecard-grid">
+                {score.strengths.length > 0 && (
+                  <div className="persona-coach__scorecard-block">
+                    <h3>Strengths</h3>
+                    <ul>
+                      {score.strengths.map((s, i) => (
+                        <li key={i}>{s}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {score.improvements.length > 0 && (
+                  <div className="persona-coach__scorecard-block">
+                    <h3>Improvements</h3>
+                    <ul>
+                      {score.improvements.map((s, i) => (
+                        <li key={i}>{s}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+
+              {score.suggested_rewrite && (
+                <div className="persona-coach__scorecard-rewrite">
+                  <span className="persona-coach__scorecard-rewrite-label">Suggested rewrite</span>
+                  <p>{score.suggested_rewrite}</p>
+                </div>
+              )}
+            </section>
+          )}
         </>
       )}
     </div>

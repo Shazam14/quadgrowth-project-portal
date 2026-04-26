@@ -488,3 +488,170 @@
   font-size: 13px;
   margin: 0;
 }
+
+/* ── Scorecard ──────────────────────────── */
+.persona-coach__scorebar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.persona-coach__score-btn {
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #111d33;
+  background: var(--gold);
+  border: none;
+  border-radius: 8px;
+  padding: 12px 26px;
+  cursor: pointer;
+}
+
+.persona-coach__score-btn:hover:not(:disabled) {
+  filter: brightness(1.05);
+}
+
+.persona-coach__score-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.persona-coach__scorecard {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 24px;
+  border: 1px solid rgba(200, 150, 62, 0.25);
+  border-radius: 14px;
+  background: rgba(17, 29, 51, 0.55);
+}
+
+.persona-coach__scorecard-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid rgba(245, 240, 232, 0.08);
+  padding-bottom: 14px;
+}
+
+.persona-coach__scorecard-eyebrow {
+  font-family: var(--font-dm-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.persona-coach__scorecard-overall {
+  font-family: var(--font-playfair), serif;
+  font-size: 2.4rem;
+  font-weight: 600;
+  color: var(--gold-light);
+  line-height: 1;
+}
+
+.persona-coach__scorecard-overall-suffix {
+  font-size: 1rem;
+  color: rgba(245, 240, 232, 0.5);
+  margin-left: 4px;
+}
+
+.persona-coach__scorecard-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.persona-coach__scorecard-pill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 88px;
+  padding: 10px 14px;
+  border: 1px solid rgba(245, 240, 232, 0.12);
+  border-radius: 10px;
+  background: rgba(17, 29, 51, 0.4);
+}
+
+.persona-coach__scorecard-pill-label {
+  font-family: var(--font-dm-mono), ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(245, 240, 232, 0.55);
+}
+
+.persona-coach__scorecard-pill-value {
+  font-family: var(--font-playfair), serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--gold-light);
+  line-height: 1;
+}
+
+.persona-coach__scorecard-summary {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--cream);
+}
+
+.persona-coach__scorecard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.persona-coach__scorecard-block h3 {
+  font-family: var(--font-dm-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 0 0 8px;
+}
+
+.persona-coach__scorecard-block ul {
+  margin: 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.persona-coach__scorecard-block li {
+  color: rgba(245, 240, 232, 0.85);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.persona-coach__scorecard-rewrite {
+  padding: 14px 16px;
+  border: 1px dashed rgba(200, 150, 62, 0.4);
+  border-radius: 10px;
+  background: rgba(200, 150, 62, 0.06);
+}
+
+.persona-coach__scorecard-rewrite-label {
+  display: block;
+  font-family: var(--font-dm-mono), ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+
+.persona-coach__scorecard-rewrite p {
+  margin: 0;
+  color: var(--cream);
+  font-style: italic;
+  line-height: 1.5;
+}

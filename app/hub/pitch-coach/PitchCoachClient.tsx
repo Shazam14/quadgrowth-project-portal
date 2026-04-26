@@ -7,6 +7,29 @@ import { useBrowserStt } from "../_lib/useBrowserStt";
 type Msg = { role: "user" | "assistant"; content: string };
 type Phase = "idle" | "active" | "ended";
 
+type Scorecard = {
+  metrics: {
+    clarity: number;
+    relevance: number;
+    objection_handling: number;
+    rapport: number;
+    cta_strength: number;
+  };
+  overall: number;
+  strengths: string[];
+  improvements: string[];
+  suggested_rewrite: string;
+  summary: string;
+};
+
+const METRIC_LABELS: { key: keyof Scorecard["metrics"]; label: string }[] = [
+  { key: "clarity", label: "Clarity" },
+  { key: "relevance", label: "Relevance" },
+  { key: "objection_handling", label: "Objections" },
+  { key: "rapport", label: "Rapport" },
+  { key: "cta_strength", label: "CTA" },
+];
+
 const COACH_OPENER =
   "Pitch coach here. Drop the situation in — pitch, objection, or lead profile — and I'll come back with what's working, what's weak, and your next move. What've you got?";
 
@@ -17,6 +40,9 @@ export default function PitchCoachClient() {
   const [streaming, setStreaming] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [score, setScore] = useState<Scorecard | null>(null);
+  const [scoring, setScoring] = useState(false);
+  const [scoreError, setScoreError] = useState<string | null>(null);
   const tts = useBrowserTts();
   const stt = useBrowserStt();
   const sttBaseRef = useRef("");
@@ -86,6 +112,8 @@ export default function PitchCoachClient() {
     setHistory([opener]);
     setStreaming("");
     setError(null);
+    setScore(null);
+    setScoreError(null);
     setPhase("active");
     void tts.speak(COACH_OPENER);
   }
@@ -94,6 +122,30 @@ export default function PitchCoachClient() {
     tts.stop();
     stt.stop();
     setPhase("ended");
+  }
+
+  async function scoreSession() {
+    if (scoring) return;
+    if (!history.some((m) => m.role === "user")) return;
+    setScoring(true);
+    setScoreError(null);
+    try {
+      const res = await fetch("/api/score-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          context: "pitch-coach",
+          messages: history,
+        }),
+      });
+      if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+      const card = (await res.json()) as Scorecard;
+      setScore(card);
+    } catch (err) {
+      setScoreError(err instanceof Error ? err.message : String(err));
+    } finally {
+      setScoring(false);
+    }
   }
 
   return (
@@ -200,6 +252,90 @@ export default function PitchCoachClient() {
               </p>
             )}
           </form>
+
+          {phase === "ended" && history.some((m) => m.role === "user") && !score && (
+            <div className="pitch-coach__scorebar">
+              <button
+                type="button"
+                className="pitch-coach__score-btn"
+                onClick={scoreSession}
+                disabled={scoring}
+                data-testid="pitch-coach-score"
+              >
+                {scoring ? "Scoring…" : "★ Score this session"}
+              </button>
+              {scoreError && (
+                <p className="pitch-coach__error" data-testid="pitch-coach-score-error">
+                  Error: {scoreError}
+                </p>
+              )}
+            </div>
+          )}
+
+          {score && (
+            <section className="pitch-coach__scorecard" data-testid="pitch-coach-scorecard">
+              <header className="pitch-coach__scorecard-header">
+                <span className="pitch-coach__scorecard-eyebrow">Session score</span>
+                <span
+                  className="pitch-coach__scorecard-overall"
+                  data-testid="pitch-coach-scorecard-overall"
+                >
+                  {score.overall}
+                  <span className="pitch-coach__scorecard-overall-suffix">/10</span>
+                </span>
+              </header>
+
+              <ul className="pitch-coach__scorecard-metrics">
+                {METRIC_LABELS.map(({ key, label }) => (
+                  <li key={key} className="pitch-coach__scorecard-pill">
+                    <span className="pitch-coach__scorecard-pill-label">{label}</span>
+                    <span className="pitch-coach__scorecard-pill-value">
+                      {score.metrics[key]}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+
+              {score.summary && (
+                <p
+                  className="pitch-coach__scorecard-summary"
+                  data-testid="pitch-coach-scorecard-summary"
+                >
+                  {score.summary}
+                </p>
+              )}
+
+              <div className="pitch-coach__scorecard-grid">
+                {score.strengths.length > 0 && (
+                  <div className="pitch-coach__scorecard-block">
+                    <h3>Strengths</h3>
+                    <ul>
+                      {score.strengths.map((s, i) => (
+                        <li key={i}>{s}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {score.improvements.length > 0 && (
+                  <div className="pitch-coach__scorecard-block">
+                    <h3>Improvements</h3>
+                    <ul>
+                      {score.improvements.map((s, i) => (
+                        <li key={i}>{s}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+
+              {score.suggested_rewrite && (
+                <div className="pitch-coach__scorecard-rewrite">
+                  <span className="pitch-coach__scorecard-rewrite-label">Suggested rewrite</span>
+                  <p>{score.suggested_rewrite}</p>
+                </div>
+              )}
+            </section>
+          )}
         </>
       )}
     </div>
