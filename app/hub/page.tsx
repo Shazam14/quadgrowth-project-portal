@@ -26,6 +26,12 @@ const TOOLS = [
     title: "Company Bible",
     desc: "Credentials, team access matrix, security rules. Phase 1 ≤5 people.",
   },
+  {
+    href: "/hub/branding",
+    icon: "🎨",
+    title: "Brand Kit",
+    desc: "Logo system, colours, typography, social templates, voice & tone.",
+  },
 ];
 
 export const metadata = { title: "Sales Hub" };
