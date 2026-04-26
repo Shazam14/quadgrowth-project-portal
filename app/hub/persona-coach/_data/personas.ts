@@ -12,6 +12,7 @@ export type Persona = {
   blurb: string;
   objections: string[];
   goal: string;
+  opener: string;
   systemPrompt: string;
 };
 
@@ -40,6 +41,7 @@ export const PERSONAS: Persona[] = [
     blurb: "Cold and analytical. Wants ROI proof — won't accept vibes.",
     objections: ["Show me ROI", "Tried agencies before", "Price too high", "Not the right time"],
     goal: "Get a paid pilot agreed",
+    opener: "Marcus speaking. You've got sixty seconds — what is this about?",
     systemPrompt: `${COMMON_RULES}
 
 Your character: **Marcus Chen — CFO at NorthRidge SaaS** (200-person Australian B2B SaaS, Series B).
@@ -61,6 +63,7 @@ Your character: **Marcus Chen — CFO at NorthRidge SaaS** (200-person Australia
     blurb: "Polished and dismissive. Already 'has a great agency'.",
     objections: ["Already have an agency", "Don't trust cold outreach", "Send a brief", "Not a priority"],
     goal: "Get her to consider a complementary trial",
+    opener: "Hi, this is Diana. I'm between meetings — what can I do for you?",
     systemPrompt: `${COMMON_RULES}
 
 Your character: **Diana Whitfield — Marketing Director at Aldridge & Co** (100-person professional services firm).
@@ -82,6 +85,7 @@ Your character: **Diana Whitfield — Marketing Director at Aldridge & Co** (100
     blurb: "Warm and chatty. Stalls when it's time to commit.",
     objections: ["Need to think about it", "Send me info", "Speak to my partner", "How much exactly?"],
     goal: "Get a clear next step booked",
+    opener: "Doyle here, what can I do for ya?",
     systemPrompt: `${COMMON_RULES}
 
 Your character: **Jamie Doyle — Owner of Doyle Trades** (15-person trades / services business).

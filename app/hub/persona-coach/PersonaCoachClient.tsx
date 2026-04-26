@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useBrowserTts } from "../_lib/useBrowserTts";
 import type { Difficulty } from "./_data/personas";
 
 type PersonaSummary = {
@@ -14,9 +15,11 @@ type PersonaSummary = {
   blurb: string;
   objections: string[];
   goal: string;
+  opener: string;
 };
 
 type Msg = { role: "user" | "assistant"; content: string };
+type Phase = "idle" | "active" | "ended";
 
 const DIFFICULTY_LABEL: Record<Difficulty, string> = {
   hardest: "Hardest",
@@ -26,17 +29,19 @@ const DIFFICULTY_LABEL: Record<Difficulty, string> = {
 
 export default function PersonaCoachClient({ personas }: { personas: PersonaSummary[] }) {
   const [personaId, setPersonaId] = useState<string | null>(null);
+  const [phase, setPhase] = useState<Phase>("idle");
   const [input, setInput] = useState("");
   const [history, setHistory] = useState<Msg[]>([]);
   const [streaming, setStreaming] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const tts = useBrowserTts();
 
   const activePersona = personas.find((p) => p.id === personaId);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!input.trim() || loading || !personaId) return;
+    if (!input.trim() || loading || !personaId || phase !== "active") return;
     const userMsg: Msg = { role: "user", content: input.trim() };
     const next = [...history, userMsg];
     setHistory(next);
@@ -64,6 +69,7 @@ export default function PersonaCoachClient({ personas }: { personas: PersonaSumm
       }
       setHistory((h) => [...h, { role: "assistant", content: acc }]);
       setStreaming("");
+      void tts.speak(acc);
     } catch (err) {
       setError(err instanceof Error ? err.message : String(err));
     } finally {
@@ -72,23 +78,36 @@ export default function PersonaCoachClient({ personas }: { personas: PersonaSumm
   }
 
   function selectPersona(id: string) {
+    tts.stop();
     setPersonaId(id);
     setHistory([]);
     setStreaming("");
     setError(null);
+    setPhase("idle");
   }
 
   function changePersona() {
+    tts.stop();
     setPersonaId(null);
     setHistory([]);
     setStreaming("");
     setError(null);
+    setPhase("idle");
   }
 
-  function handleReset() {
-    setHistory([]);
+  function startSession() {
+    if (!activePersona) return;
+    const opener: Msg = { role: "assistant", content: activePersona.opener };
+    setHistory([opener]);
     setStreaming("");
     setError(null);
+    setPhase("active");
+    void tts.speak(activePersona.opener);
+  }
+
+  function endSession() {
+    tts.stop();
+    setPhase("ended");
   }
 
   if (!activePersona) {
@@ -144,7 +163,7 @@ export default function PersonaCoachClient({ personas }: { personas: PersonaSumm
           type="button"
           className="persona-coach__change"
           onClick={changePersona}
-          disabled={loading}
+          disabled={loading || phase === "active"}
           data-testid="persona-coach-change"
         >
           ↔ Change
@@ -160,73 +179,93 @@ export default function PersonaCoachClient({ personas }: { personas: PersonaSumm
         </ul>
       </div>
 
-      {history.length > 0 ? (
-        <div className="persona-coach__transcript" data-testid="persona-coach-transcript">
-          {history.map((m, i) => (
-            <div key={i} className={`persona-coach__msg persona-coach__msg--${m.role}`}>
-              <span className="persona-coach__role">
-                {m.role === "user" ? "You" : activePersona.name}
-              </span>
-              <p>{m.content}</p>
-            </div>
-          ))}
-          {streaming && (
-            <div className="persona-coach__msg persona-coach__msg--assistant">
-              <span className="persona-coach__role">{activePersona.name}</span>
-              <p>{streaming}</p>
-            </div>
-          )}
+      <div className="persona-coach__statusbar" data-testid="persona-coach-statusbar">
+        <span className="persona-coach__voice" data-testid="persona-coach-voice">
+          {tts.voiceLabel}
+        </span>
+        <span className="persona-coach__status">
+          {phase === "idle" && "Ready — start the session when you are."}
+          {phase === "active" && (tts.isSpeaking ? `${activePersona.name} speaking…` : "Live call.")}
+          {phase === "ended" && "Session ended."}
+        </span>
+      </div>
+
+      {phase === "idle" ? (
+        <div className="persona-coach__startbar">
+          <p className="persona-coach__empty">
+            {activePersona.name} is on the line. Start the session — they&apos;ll open the call.
+          </p>
+          <button
+            type="button"
+            className="persona-coach__start"
+            onClick={startSession}
+            data-testid="persona-coach-start"
+          >
+            ▶ Start session
+          </button>
         </div>
       ) : (
-        <p className="persona-coach__empty">
-          Open the call below — {activePersona.name} will reply in character.
-        </p>
-      )}
+        <>
+          <div className="persona-coach__transcript" data-testid="persona-coach-transcript">
+            {history.map((m, i) => (
+              <div key={i} className={`persona-coach__msg persona-coach__msg--${m.role}`}>
+                <span className="persona-coach__role">
+                  {m.role === "user" ? "You" : activePersona.name}
+                </span>
+                <p>{m.content}</p>
+              </div>
+            ))}
+            {streaming && (
+              <div className="persona-coach__msg persona-coach__msg--assistant">
+                <span className="persona-coach__role">{activePersona.name}</span>
+                <p>{streaming}</p>
+              </div>
+            )}
+          </div>
 
-      <form className="persona-coach__form" onSubmit={handleSubmit} data-testid="persona-coach-form">
-        <label htmlFor="persona-input" className="persona-coach__label">
-          Your line
-        </label>
-        <textarea
-          id="persona-input"
-          className="persona-coach__input"
-          data-testid="persona-coach-input"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder={
-            history.length === 0
-              ? "Open the call. e.g. 'Hi Marcus, thanks for the time. Mind if I share why I reached out?'"
-              : "Your reply…"
-          }
-          rows={3}
-          disabled={loading}
-        />
-        <div className="persona-coach__actions">
-          <button
-            type="submit"
-            className="persona-coach__submit"
-            data-testid="persona-coach-submit"
-            disabled={loading || !input.trim()}
-          >
-            {loading ? "…" : history.length === 0 ? "Start call" : "Send"}
-          </button>
-          {history.length > 0 && (
-            <button
-              type="button"
-              className="persona-coach__reset"
-              onClick={handleReset}
-              disabled={loading}
-            >
-              End call
-            </button>
-          )}
-        </div>
-        {error && (
-          <p className="persona-coach__error" data-testid="persona-coach-error">
-            Error: {error}
-          </p>
-        )}
-      </form>
+          <form className="persona-coach__form" onSubmit={handleSubmit} data-testid="persona-coach-form">
+            <label htmlFor="persona-input" className="persona-coach__label">
+              Your line
+            </label>
+            <textarea
+              id="persona-input"
+              className="persona-coach__input"
+              data-testid="persona-coach-input"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder={phase === "ended" ? "Session ended." : "Your reply…"}
+              rows={3}
+              disabled={loading || phase !== "active"}
+            />
+            <div className="persona-coach__actions">
+              <button
+                type="submit"
+                className="persona-coach__submit"
+                data-testid="persona-coach-submit"
+                disabled={loading || !input.trim() || phase !== "active"}
+              >
+                {loading ? "…" : "Send"}
+              </button>
+              {phase === "active" && (
+                <button
+                  type="button"
+                  className="persona-coach__end"
+                  onClick={endSession}
+                  disabled={loading}
+                  data-testid="persona-coach-end"
+                >
+                  End session
+                </button>
+              )}
+            </div>
+            {error && (
+              <p className="persona-coach__error" data-testid="persona-coach-error">
+                Error: {error}
+              </p>
+            )}
+          </form>
+        </>
+      )}
     </div>
   );
 }

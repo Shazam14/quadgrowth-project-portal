@@ -12,14 +12,14 @@ test.describe("CGM — /hub/persona-coach (AI Persona Coach)", () => {
     await expect(page.locator(".persona-card__badge--easier")).toBeVisible();
   });
 
-  test("clicking a card opens the call shell with selected bar + objections + change button", async ({ page }) => {
+  test("clicking a card opens the call shell with selected bar + objections + start button", async ({ page }) => {
     await page.goto("/hub/persona-coach");
     await page.locator("[data-testid='persona-card'][data-persona-id='marcus-chen']").click();
     await expect(page.locator("[data-testid='persona-coach-selected']")).toBeVisible();
     await expect(page.locator("[data-testid='persona-coach-selected']")).toContainText("Marcus Chen");
     await expect(page.locator("[data-testid='persona-coach-objections']")).toBeVisible();
-    await expect(page.locator("[data-testid='persona-coach-input']")).toBeVisible();
-    await expect(page.locator("[data-testid='persona-coach-submit']")).toBeDisabled();
+    await expect(page.locator("[data-testid='persona-coach-statusbar']")).toBeVisible();
+    await expect(page.locator("[data-testid='persona-coach-start']")).toBeVisible();
     await expect(page.locator("[data-testid='persona-coach-change']")).toBeVisible();
   });
 
@@ -30,6 +30,16 @@ test.describe("CGM — /hub/persona-coach (AI Persona Coach)", () => {
     await page.locator("[data-testid='persona-coach-change']").click();
     await expect(page.locator("[data-testid='persona-coach-grid']")).toBeVisible();
     await expect(page.locator("[data-testid='persona-card']")).toHaveCount(3);
+  });
+
+  test("Start session reveals scripted opener and enables input + end button", async ({ page }) => {
+    await page.goto("/hub/persona-coach");
+    await page.locator("[data-testid='persona-card'][data-persona-id='marcus-chen']").click();
+    await page.locator("[data-testid='persona-coach-start']").click();
+    await expect(page.locator("[data-testid='persona-coach-transcript']")).toContainText(/Marcus speaking/);
+    await expect(page.locator("[data-testid='persona-coach-input']")).toBeEnabled();
+    await expect(page.locator("[data-testid='persona-coach-end']")).toBeVisible();
+    await expect(page.locator("[data-testid='persona-coach-change']")).toBeDisabled();
   });
 
   test("submitting streams a persona response into the transcript", async ({ page }) => {
@@ -43,6 +53,7 @@ test.describe("CGM — /hub/persona-coach (AI Persona Coach)", () => {
 
     await page.goto("/hub/persona-coach");
     await page.locator("[data-testid='persona-card'][data-persona-id='marcus-chen']").click();
+    await page.locator("[data-testid='persona-coach-start']").click();
     await page.locator("[data-testid='persona-coach-input']").fill("Hi Marcus, thanks for taking the call. Mind if I share why I reached out?");
     await page.locator("[data-testid='persona-coach-submit']").click();
 
@@ -50,5 +61,15 @@ test.describe("CGM — /hub/persona-coach (AI Persona Coach)", () => {
     await expect(transcript).toBeVisible();
     await expect(transcript).toContainText("thanks for taking the call");
     await expect(transcript).toContainText(/Walk me through the numbers/);
+  });
+
+  test("End session locks the input and hides the end button", async ({ page }) => {
+    await page.goto("/hub/persona-coach");
+    await page.locator("[data-testid='persona-card'][data-persona-id='jamie-doyle']").click();
+    await page.locator("[data-testid='persona-coach-start']").click();
+    await page.locator("[data-testid='persona-coach-end']").click();
+    await expect(page.locator("[data-testid='persona-coach-input']")).toBeDisabled();
+    await expect(page.locator("[data-testid='persona-coach-submit']")).toBeDisabled();
+    await expect(page.locator("[data-testid='persona-coach-end']")).toHaveCount(0);
   });
 });
