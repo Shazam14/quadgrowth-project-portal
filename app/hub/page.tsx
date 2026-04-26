@@ -38,6 +38,12 @@ const TOOLS = [
     title: "AI Pitch Coach",
     desc: "Paste a pitch, objection, or lead. Get a tight critique and your next move.",
   },
+  {
+    href: "/hub/persona-coach",
+    icon: "🎭",
+    title: "AI Persona Coach",
+    desc: "Live role-play against a tough prospect. Skeptical CFO, defensive director, tyre-kicker.",
+  },
 ];
 
 export const metadata = { title: "Sales Hub" };
