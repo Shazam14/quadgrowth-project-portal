@@ -9,6 +9,30 @@ test.describe("CGM — /hub/pitch-coach (AI Pitch Coach)", () => {
     await expect(page.locator("[data-testid='pitch-coach-start']")).toBeVisible();
   });
 
+  test("scenario and suburb selectors render in idle state", async ({ page }) => {
+    await page.goto("/hub/pitch-coach");
+    const scenario = page.locator("[data-testid='pitch-coach-scenario']");
+    const suburb = page.locator("[data-testid='pitch-coach-suburb']");
+    await expect(scenario).toBeVisible();
+    await expect(suburb).toBeVisible();
+    await expect(scenario.locator("option")).toHaveCount(4);
+    await expect(scenario).toContainText("Cold email reply");
+    await expect(scenario).toContainText("Discovery call");
+    await expect(scenario).toContainText("Objection handling");
+    await expect(scenario).toContainText("Warm lead followup");
+    await expect(suburb).toContainText("Sydney NSW");
+    await expect(suburb).toContainText("Melbourne VIC");
+  });
+
+  test("selecting Objection scenario drives the scripted opener on Start", async ({ page }) => {
+    await page.goto("/hub/pitch-coach");
+    await page.locator("[data-testid='pitch-coach-scenario']").selectOption("objection");
+    await page.locator("[data-testid='pitch-coach-start']").click();
+    await expect(page.locator("[data-testid='pitch-coach-transcript']")).toContainText(
+      /Hit me with the objection/,
+    );
+  });
+
   test("Start session reveals coach opener, input, mic, and end button", async ({ page }) => {
     await page.goto("/hub/pitch-coach");
     await page.locator("[data-testid='pitch-coach-start']").click();

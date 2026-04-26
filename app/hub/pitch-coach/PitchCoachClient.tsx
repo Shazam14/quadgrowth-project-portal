@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import { useBrowserTts } from "../_lib/useBrowserTts";
 import { useBrowserStt } from "../_lib/useBrowserStt";
+import { SCENARIOS, SUBURBS, getScenario, type ScenarioId } from "./_data/scenarios";
 
 type Msg = { role: "user" | "assistant"; content: string };
 type Phase = "idle" | "active" | "ended";
@@ -30,9 +31,6 @@ const METRIC_LABELS: { key: keyof Scorecard["metrics"]; label: string }[] = [
   { key: "cta_strength", label: "CTA" },
 ];
 
-const COACH_OPENER =
-  "Pitch coach here. Drop the situation in — pitch, objection, or lead profile — and I'll come back with what's working, what's weak, and your next move. What've you got?";
-
 export default function PitchCoachClient() {
   const [phase, setPhase] = useState<Phase>("idle");
   const [input, setInput] = useState("");
@@ -43,6 +41,8 @@ export default function PitchCoachClient() {
   const [score, setScore] = useState<Scorecard | null>(null);
   const [scoring, setScoring] = useState(false);
   const [scoreError, setScoreError] = useState<string | null>(null);
+  const [scenario, setScenario] = useState<ScenarioId>(SCENARIOS[0].id);
+  const [suburb, setSuburb] = useState<string>(SUBURBS[0]);
   const tts = useBrowserTts();
   const stt = useBrowserStt();
   const sttBaseRef = useRef("");
@@ -84,7 +84,7 @@ export default function PitchCoachClient() {
       const res = await fetch("/api/pitch-coach", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: next }),
+        body: JSON.stringify({ messages: next, scenario, suburb }),
       });
       if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
       const reader = res.body?.getReader();
@@ -108,14 +108,15 @@ export default function PitchCoachClient() {
   }
 
   function startSession() {
-    const opener: Msg = { role: "assistant", content: COACH_OPENER };
+    const openerText = getScenario(scenario)?.opener ?? SCENARIOS[0].opener;
+    const opener: Msg = { role: "assistant", content: openerText };
     setHistory([opener]);
     setStreaming("");
     setError(null);
     setScore(null);
     setScoreError(null);
     setPhase("active");
-    void tts.speak(COACH_OPENER);
+    void tts.speak(openerText);
   }
 
   function endSession() {
@@ -159,8 +160,40 @@ export default function PitchCoachClient() {
 
       {phase === "idle" ? (
         <div className="pitch-coach__startbar">
+          <div className="pitch-coach__selectors">
+            <label className="pitch-coach__select-field">
+              <span className="pitch-coach__select-label">Scenario</span>
+              <select
+                className="pitch-coach__select"
+                data-testid="pitch-coach-scenario"
+                value={scenario}
+                onChange={(e) => setScenario(e.target.value as ScenarioId)}
+              >
+                {SCENARIOS.map((s) => (
+                  <option key={s.id} value={s.id}>
+                    {s.label}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="pitch-coach__select-field">
+              <span className="pitch-coach__select-label">Lead suburb</span>
+              <select
+                className="pitch-coach__select"
+                data-testid="pitch-coach-suburb"
+                value={suburb}
+                onChange={(e) => setSuburb(e.target.value)}
+              >
+                {SUBURBS.map((s) => (
+                  <option key={s} value={s}>
+                    {s}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
           <p className="pitch-coach__empty">
-            Start a session — the coach will open and you can paste the situation.
+            Pick a scenario and the lead's suburb, then start — the coach will open in role.
           </p>
           <button
             type="button"

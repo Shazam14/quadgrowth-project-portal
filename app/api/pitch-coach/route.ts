@@ -1,6 +1,7 @@
 import { google } from "@ai-sdk/google";
 import { streamText } from "ai";
 import { createClient } from "@/lib/supabase/server";
+import { getScenario, SUBURBS } from "@/app/hub/pitch-coach/_data/scenarios";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -16,6 +17,19 @@ The user is a CGM. They will paste in a pitch, an objection, a lead profile, or 
 Keep responses tight (under 200 words unless asked). Plain Australian English. No corporate fluff. Bullets > paragraphs. End with one concrete next action labelled "Next move:".`;
 
 type ChatMessage = { role: "user" | "assistant"; content: string };
+
+function buildSystemPrompt(scenarioId: string | undefined, suburb: string | undefined): string {
+  const lines: string[] = [SYSTEM_PROMPT];
+  const scenario = scenarioId ? getScenario(scenarioId) : undefined;
+  const validSuburb = suburb && SUBURBS.includes(suburb) ? suburb : undefined;
+  if (scenario || validSuburb) {
+    lines.push("\nSession context:");
+    if (scenario) lines.push(`- Scenario: ${scenario.label} — ${scenario.promptHint}`);
+    if (validSuburb)
+      lines.push(`- Lead location: ${validSuburb}, Australia. Frame language for that market.`);
+  }
+  return lines.join("\n");
+}
 
 export async function POST(req: Request) {
   const supabase = await createClient();
@@ -33,7 +47,11 @@ export async function POST(req: Request) {
     return new Response("Forbidden", { status: 403 });
   }
 
-  const body = (await req.json()) as { messages?: ChatMessage[] };
+  const body = (await req.json()) as {
+    messages?: ChatMessage[];
+    scenario?: string;
+    suburb?: string;
+  };
   const messages = Array.isArray(body.messages) ? body.messages : [];
   if (messages.length === 0) {
     return new Response("messages required", { status: 400 });
@@ -41,7 +59,7 @@ export async function POST(req: Request) {
 
   const result = streamText({
     model: google("gemma-3-27b-it"),
-    system: SYSTEM_PROMPT,
+    system: buildSystemPrompt(body.scenario, body.suburb),
     messages,
     onError: ({ error }) => {
       console.error("[pitch-coach] stream error:", error);

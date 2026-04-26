@@ -166,6 +166,55 @@
   gap: 14px;
 }
 
+.pitch-coach__selectors {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+.pitch-coach__select-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pitch-coach__select-label {
+  font-family: var(--font-dm-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.pitch-coach__select {
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
+  font-size: 14px;
+  color: var(--cream);
+  background: rgba(17, 29, 51, 0.7);
+  border: 1px solid rgba(245, 240, 232, 0.15);
+  border-radius: 8px;
+  padding: 10px 12px;
+  cursor: pointer;
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--gold) 50%),
+    linear-gradient(135deg, var(--gold) 50%, transparent 50%);
+  background-position: calc(100% - 18px) 50%, calc(100% - 12px) 50%;
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+  padding-right: 32px;
+}
+
+.pitch-coach__select:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(200, 150, 62, 0.18);
+}
+
+.pitch-coach__select option {
+  background: #111d33;
+  color: var(--cream);
+}
+
 .pitch-coach__empty {
   margin: 0;
   padding: 32px 20px;
