@@ -1,53 +1,42 @@
-export const metadata = {
-  title: "Client Portal",
-};
+import Link from "next/link";
+import "./portal.css";
+
+const TOOLS = [
+  {
+    href: "/portal/roi-calculator",
+    icon: "📈",
+    title: "ROI Calculator",
+    desc: "Patient lifetime value × confirmed bookings — see what this campaign is really worth.",
+  },
+];
+
+export const metadata = { title: "Client Portal" };
 
 export default function PortalHome() {
   return (
-    <main
-      style={{
-        minHeight: "100vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "40px 24px",
-        textAlign: "center",
-      }}
-    >
-      <div style={{ maxWidth: 520 }}>
-        <p
-          style={{
-            fontFamily: "var(--font-dm-mono), monospace",
-            fontSize: 11,
-            letterSpacing: 3,
-            textTransform: "uppercase",
-            color: "var(--gold)",
-            marginBottom: 12,
-          }}
-        >
-          /portal
+    <main className="portal">
+      <p className="portal__eyebrow">/portal</p>
+      <header className="portal__header">
+        <h1>Client Portal</h1>
+        <p>
+          Your QuadGrowth dashboard. Track campaign performance, ROI, and live lead activity.
         </p>
-        <h1
-          style={{
-            fontFamily: "var(--font-playfair), serif",
-            fontSize: 42,
-            color: "var(--cream)",
-            marginBottom: 16,
-            fontWeight: 600,
-          }}
-        >
-          Client Portal
-        </h1>
-        <p style={{ color: "var(--muted)", lineHeight: 1.6 }}>
-          Read-only dashboard for QuadGrowth clients — KPI summary, live lead feed,
-          ROI calculator. Auth gate arrives Day 2 (Supabase). Phase 1B features
-          arrive Week 2.
-        </p>
-        <p style={{ marginTop: 32 }}>
-          <a href="/" style={{ color: "var(--gold)" }}>
-            ← Back to roadmap
-          </a>
-        </p>
+      </header>
+      <div className="portal__grid" data-testid="portal-grid">
+        {TOOLS.map((tool) => (
+          <Link
+            key={tool.href}
+            href={tool.href}
+            className="portal__card"
+            data-testid="portal-tool-card"
+          >
+            <div className="portal__card-icon" aria-hidden>
+              {tool.icon}
+            </div>
+            <h2>{tool.title}</h2>
+            <p>{tool.desc}</p>
+          </Link>
+        ))}
       </div>
     </main>
   );
