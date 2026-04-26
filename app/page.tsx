@@ -1,11 +1,34 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { createClient } from "@/lib/supabase/server";
 
 export const metadata = {
   title: "QuadGrowth",
   description: "QuadGrowth internal portal.",
 };
 
-export default function Home() {
+const ROLE_HOME: Record<string, string> = {
+  client: "/portal",
+  cgm: "/hub",
+  admin: "/admin",
+};
+
+export default async function Home() {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (user) {
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("role")
+      .eq("id", user.id)
+      .single();
+    const home = profile?.role ? ROLE_HOME[profile.role] : null;
+    if (home) redirect(home);
+  }
+
   return (
     <main
       style={{
