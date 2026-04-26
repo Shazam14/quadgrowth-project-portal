@@ -32,6 +32,12 @@ const TOOLS = [
     title: "Brand Kit",
     desc: "Logo system, colours, typography, social templates, voice & tone.",
   },
+  {
+    href: "/hub/pitch-coach",
+    icon: "🤖",
+    title: "AI Pitch Coach",
+    desc: "Paste a pitch, objection, or lead. Get a tight critique and your next move.",
+  },
 ];
 
 export const metadata = { title: "Sales Hub" };
