@@ -165,7 +165,7 @@
   padding: 16px 20px;
   border: 1px solid rgba(245, 240, 232, 0.12);
   border-radius: 14px;
-  background: rgba(17, 29, 51, 0.7);
+  background: var(--navy);
 }
 
 .persona-coach__selected-avatar {
@@ -248,7 +248,7 @@
   padding: 12px 16px;
   border: 1px solid rgba(245, 240, 232, 0.08);
   border-radius: 10px;
-  background: rgba(17, 29, 51, 0.4);
+  background: var(--navy);
 }
 
 .persona-coach__objections-label {
@@ -301,7 +301,7 @@
   color: rgba(245, 240, 232, 0.55);
   border: 1px solid rgba(245, 240, 232, 0.06);
   border-radius: 8px;
-  background: rgba(17, 29, 51, 0.35);
+  background: var(--navy);
 }
 
 .persona-coach__voice {
@@ -410,7 +410,7 @@
   border-radius: 10px;
   padding: 14px 18px;
   border: 1px solid rgba(245, 240, 232, 0.08);
-  background: rgba(17, 29, 51, 0.55);
+  background: var(--navy);
 }
 
 .persona-coach__msg--user {
@@ -448,7 +448,7 @@
   font-size: 15px;
   line-height: 1.5;
   color: var(--cream);
-  background: rgba(17, 29, 51, 0.7);
+  background: var(--navy);
   border: 1px solid rgba(245, 240, 232, 0.15);
   border-radius: 8px;
   padding: 12px 14px;
@@ -525,7 +525,7 @@
   padding: 24px;
   border: 1px solid rgba(200, 150, 62, 0.25);
   border-radius: 14px;
-  background: rgba(17, 29, 51, 0.55);
+  background: var(--navy);
 }
 
 .persona-coach__scorecard-header {
@@ -577,7 +577,7 @@
   padding: 10px 14px;
   border: 1px solid rgba(245, 240, 232, 0.12);
   border-radius: 10px;
-  background: rgba(17, 29, 51, 0.4);
+  background: var(--navy);
 }
 
 .persona-coach__scorecard-pill-label {
