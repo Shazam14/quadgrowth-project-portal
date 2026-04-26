@@ -9,7 +9,7 @@ type Feature = {
 
 const FEATURES: Feature[] = [
   { label: "KPI dashboard" },
-  { label: "Live lead feed" },
+  { label: "Live lead feed", href: "/portal/leads", active: true },
   { label: "Monthly reports" },
   { label: "Campaign status" },
   { label: "ROI calculator", href: "/portal/roi-calculator", active: true },

@@ -32,6 +32,15 @@ export default defineConfig({
       testMatch: /.*\.cgm\.spec\.ts/,
     },
     {
+      name: "client",
+      use: {
+        ...devices["Desktop Chrome"],
+        storageState: "tests/.auth/client.json",
+      },
+      dependencies: ["setup"],
+      testMatch: /.*\.client\.spec\.ts/,
+    },
+    {
       name: "anon",
       use: { ...devices["Desktop Chrome"] },
       dependencies: ["setup"],

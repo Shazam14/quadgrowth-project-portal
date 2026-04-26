@@ -21,13 +21,21 @@ const admin = createClient(SUPABASE_URL, SERVICE_ROLE_KEY, {
 
 const ADMIN_AUTH_FILE = "tests/.auth/admin.json";
 const CGM_AUTH_FILE = "tests/.auth/cgm.json";
+const CLIENT_AUTH_FILE = "tests/.auth/client.json";
 
 const ADMIN_EMAIL = "shazflicks@gmail.com";
 const CGM_EMAIL = "cgm-demo@quadgrowth.com.au";
+const CLIENT_EMAIL = "client-demo@quadgrowth.com.au";
+const CLIENT_DEMO_SLUG = "demo-practice";
 
 type Role = "client" | "cgm" | "admin";
 
-async function ensureUser(email: string, role: Role, fullName: string) {
+async function ensureUser(
+  email: string,
+  role: Role,
+  fullName: string,
+  clientId: string | null = null,
+) {
   const { data: list, error: listErr } = await admin.auth.admin.listUsers({
     page: 1,
     perPage: 1000,
@@ -45,10 +53,25 @@ async function ensureUser(email: string, role: Role, fullName: string) {
   // Trigger created profile with role='client'; force the desired role.
   const { error: upErr } = await admin
     .from("profiles")
-    .update({ role, full_name: fullName })
+    .update({ role, full_name: fullName, client_id: clientId })
     .eq("id", userId);
   if (upErr) throw upErr;
   return userId;
+}
+
+async function getDemoClientId(slug: string): Promise<string> {
+  const { data, error } = await admin
+    .from("clients")
+    .select("id")
+    .eq("slug", slug)
+    .maybeSingle();
+  if (error) throw error;
+  if (!data) {
+    throw new Error(
+      `Demo client "${slug}" not found. Run "npm run seed" (and "npm run seed:leads") before tests.`,
+    );
+  }
+  return data.id;
 }
 
 async function saveAuthFor(
@@ -82,4 +105,12 @@ setup("authenticate as cgm", async ({ page }) => {
   await saveAuthFor(page, CGM_EMAIL, CGM_AUTH_FILE);
   await page.goto("/hub");
   await expect(page).toHaveURL(/\/hub/);
+});
+
+setup("authenticate as client", async ({ page }) => {
+  const demoClientId = await getDemoClientId(CLIENT_DEMO_SLUG);
+  await ensureUser(CLIENT_EMAIL, "client", "Demo Client", demoClientId);
+  await saveAuthFor(page, CLIENT_EMAIL, CLIENT_AUTH_FILE);
+  await page.goto("/portal");
+  await expect(page).toHaveURL(/\/portal/);
 });
