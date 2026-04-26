@@ -1,5 +1,5 @@
 .persona-coach {
-  max-width: 880px;
+  max-width: 1100px;
   margin: 0 auto;
   padding: 56px 32px 80px;
   color: var(--cream);
@@ -24,7 +24,7 @@
 
 .persona-coach__header p {
   color: var(--muted);
-  max-width: 640px;
+  max-width: 680px;
   font-weight: 300;
   line-height: 1.6;
 }
@@ -36,47 +36,263 @@
   gap: 24px;
 }
 
-.persona-coach__picker {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 16px 18px;
-  border: 1px solid rgba(245, 240, 232, 0.12);
-  border-radius: 10px;
-  background: rgba(17, 29, 51, 0.5);
+/* ── Grid of persona cards ───────────────── */
+.persona-coach__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
 }
 
+.persona-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  text-align: left;
+  background: var(--navy);
+  border: 1px solid rgba(245, 240, 232, 0.08);
+  border-radius: 20px;
+  padding: 24px;
+  cursor: pointer;
+  color: var(--cream);
+  font-family: var(--font-dm-sans), sans-serif;
+  transition: border-color 0.25s ease, transform 0.25s ease;
+}
+
+.persona-card:hover {
+  border-color: rgba(200, 150, 62, 0.4);
+  transform: translateY(-3px);
+}
+
+.persona-card__badge {
+  font-family: var(--font-dm-mono), ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 100px;
+  border: 1px solid;
+}
+
+.persona-card__badge--hardest {
+  color: #e07060;
+  background: rgba(192, 57, 43, 0.12);
+  border-color: rgba(224, 112, 96, 0.4);
+}
+
+.persona-card__badge--medium {
+  color: var(--gold-light);
+  background: rgba(200, 150, 62, 0.12);
+  border-color: rgba(200, 150, 62, 0.4);
+}
+
+.persona-card__badge--easier {
+  color: #6fcf97;
+  background: rgba(45, 122, 79, 0.15);
+  border-color: rgba(111, 207, 151, 0.4);
+}
+
+.persona-card__avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(200, 150, 62, 0.15);
+  border: 1px solid rgba(200, 150, 62, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-dm-mono), monospace;
+  font-size: 14px;
+  letter-spacing: 1px;
+  color: var(--gold-light);
+  margin-top: 4px;
+}
+
+.persona-card__name {
+  font-family: var(--font-playfair), serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--cream);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.persona-card__role {
+  font-size: 0.88rem;
+  color: var(--gold-light);
+  font-weight: 500;
+  margin: 0;
+}
+
+.persona-card__context {
+  font-size: 0.78rem;
+  color: rgba(245, 240, 232, 0.55);
+  margin: 0;
+}
+
+.persona-card__traits {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  list-style: none;
+  padding: 0;
+  margin: 4px 0 0;
+}
+
+.persona-card__traits li {
+  font-size: 0.72rem;
+  padding: 4px 10px;
+  border-radius: 100px;
+  background: rgba(245, 240, 232, 0.05);
+  border: 1px solid rgba(245, 240, 232, 0.12);
+  color: rgba(245, 240, 232, 0.78);
+}
+
+.persona-card__blurb {
+  font-size: 0.85rem;
+  font-style: italic;
+  color: rgba(245, 240, 232, 0.6);
+  line-height: 1.5;
+  margin: 6px 0 0;
+}
+
+/* ── Selected persona compact bar ─────────── */
+.persona-coach__selected {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  border: 1px solid rgba(245, 240, 232, 0.12);
+  border-radius: 14px;
+  background: rgba(17, 29, 51, 0.7);
+}
+
+.persona-coach__selected-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(200, 150, 62, 0.15);
+  border: 1px solid rgba(200, 150, 62, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-dm-mono), monospace;
+  font-size: 13px;
+  color: var(--gold-light);
+  flex-shrink: 0;
+}
+
+.persona-coach__selected-meta {
+  flex: 1;
+  min-width: 0;
+}
+
+.persona-coach__selected-meta h2 {
+  font-family: var(--font-dm-sans), sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--cream);
+  margin: 0;
+}
+
+.persona-coach__selected-meta p {
+  font-size: 0.82rem;
+  color: var(--gold-light);
+  margin: 2px 0 0;
+}
+
+.persona-coach__selected-goal {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: rgba(245, 240, 232, 0.7);
+}
+
+.persona-coach__goal-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(245, 240, 232, 0.45);
+  display: inline-block;
+}
+
+.persona-coach__change {
+  font-family: var(--font-dm-sans), sans-serif;
+  font-size: 0.82rem;
+  color: var(--cream);
+  background: transparent;
+  border: 1px solid rgba(245, 240, 232, 0.2);
+  border-radius: 8px;
+  padding: 8px 14px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.persona-coach__change:hover:not(:disabled) {
+  border-color: rgba(200, 150, 62, 0.5);
+}
+
+.persona-coach__change:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ── Objections row ──────────────────────── */
+.persona-coach__objections {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 12px 16px;
+  border: 1px solid rgba(245, 240, 232, 0.08);
+  border-radius: 10px;
+  background: rgba(17, 29, 51, 0.4);
+}
+
+.persona-coach__objections-label {
+  font-size: 0.75rem;
+  color: rgba(245, 240, 232, 0.55);
+  margin-right: 4px;
+}
+
+.persona-coach__objections ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.persona-coach__objections li {
+  font-size: 0.72rem;
+  padding: 4px 10px;
+  border-radius: 100px;
+  background: rgba(245, 240, 232, 0.05);
+  border: 1px solid rgba(245, 240, 232, 0.12);
+  color: rgba(245, 240, 232, 0.75);
+}
+
+.persona-coach__empty {
+  margin: 0;
+  padding: 32px 20px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: rgba(245, 240, 232, 0.5);
+  font-style: italic;
+  border: 1px dashed rgba(245, 240, 232, 0.12);
+  border-radius: 10px;
+}
+
+/* ── Transcript ─────────────────────────── */
 .persona-coach__label {
   font-family: var(--font-dm-mono), ui-monospace, monospace;
   font-size: 11px;
   letter-spacing: 2px;
   text-transform: uppercase;
   color: var(--muted);
-}
-
-.persona-coach__select {
-  font-family: var(--font-dm-sans), system-ui, sans-serif;
-  font-size: 15px;
-  color: var(--cream);
-  background: rgba(17, 29, 51, 0.7);
-  border: 1px solid rgba(245, 240, 232, 0.15);
-  border-radius: 8px;
-  padding: 10px 12px;
-  cursor: pointer;
-}
-
-.persona-coach__select:focus {
-  outline: none;
-  border-color: var(--gold);
-  box-shadow: 0 0 0 3px rgba(200, 150, 62, 0.18);
-}
-
-.persona-coach__blurb {
-  margin: 0;
-  font-size: 13px;
-  color: var(--muted);
-  font-style: italic;
-  line-height: 1.5;
 }
 
 .persona-coach__transcript {
@@ -114,6 +330,7 @@
   margin: 0;
 }
 
+/* ── Form ──────────────────────────────── */
 .persona-coach__form {
   display: flex;
   flex-direction: column;

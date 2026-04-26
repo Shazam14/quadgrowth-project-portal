@@ -1,12 +1,31 @@
 "use client";
 
 import { useState } from "react";
+import type { Difficulty } from "./_data/personas";
 
-type PersonaSummary = { id: string; label: string; blurb: string };
+type PersonaSummary = {
+  id: string;
+  difficulty: Difficulty;
+  initials: string;
+  name: string;
+  role: string;
+  context: string[];
+  traits: string[];
+  blurb: string;
+  objections: string[];
+  goal: string;
+};
+
 type Msg = { role: "user" | "assistant"; content: string };
 
+const DIFFICULTY_LABEL: Record<Difficulty, string> = {
+  hardest: "Hardest",
+  medium: "Medium",
+  easier: "Easier",
+};
+
 export default function PersonaCoachClient({ personas }: { personas: PersonaSummary[] }) {
-  const [personaId, setPersonaId] = useState(personas[0]?.id ?? "");
+  const [personaId, setPersonaId] = useState<string | null>(null);
   const [input, setInput] = useState("");
   const [history, setHistory] = useState<Msg[]>([]);
   const [streaming, setStreaming] = useState("");
@@ -52,8 +71,15 @@ export default function PersonaCoachClient({ personas }: { personas: PersonaSumm
     }
   }
 
-  function handlePersonaChange(e: React.ChangeEvent<HTMLSelectElement>) {
-    setPersonaId(e.target.value);
+  function selectPersona(id: string) {
+    setPersonaId(id);
+    setHistory([]);
+    setStreaming("");
+    setError(null);
+  }
+
+  function changePersona() {
+    setPersonaId(null);
     setHistory([]);
     setStreaming("");
     setError(null);
@@ -65,50 +91,96 @@ export default function PersonaCoachClient({ personas }: { personas: PersonaSumm
     setError(null);
   }
 
+  if (!activePersona) {
+    return (
+      <div className="persona-coach__shell">
+        <div className="persona-coach__grid" data-testid="persona-coach-grid">
+          {personas.map((p) => (
+            <button
+              key={p.id}
+              type="button"
+              className="persona-card"
+              data-testid="persona-card"
+              data-persona-id={p.id}
+              onClick={() => selectPersona(p.id)}
+            >
+              <span className={`persona-card__badge persona-card__badge--${p.difficulty}`}>
+                {DIFFICULTY_LABEL[p.difficulty]}
+              </span>
+              <div className="persona-card__avatar" aria-hidden>
+                {p.initials}
+              </div>
+              <h2 className="persona-card__name">{p.name}</h2>
+              <p className="persona-card__role">{p.role}</p>
+              <p className="persona-card__context">{p.context.join(" · ")}</p>
+              <ul className="persona-card__traits">
+                {p.traits.map((t) => (
+                  <li key={t}>{t}</li>
+                ))}
+              </ul>
+              <p className="persona-card__blurb">{p.blurb}</p>
+            </button>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="persona-coach__shell">
-      <div className="persona-coach__picker">
-        <label htmlFor="persona-select" className="persona-coach__label">
-          Persona
-        </label>
-        <select
-          id="persona-select"
-          className="persona-coach__select"
-          data-testid="persona-coach-select"
-          value={personaId}
-          onChange={handlePersonaChange}
+      <div className="persona-coach__selected" data-testid="persona-coach-selected">
+        <div className="persona-coach__selected-avatar" aria-hidden>
+          {activePersona.initials}
+        </div>
+        <div className="persona-coach__selected-meta">
+          <h2>{activePersona.name}</h2>
+          <p>{activePersona.role}</p>
+        </div>
+        <div className="persona-coach__selected-goal">
+          <span className="persona-coach__goal-dot" aria-hidden />
+          {activePersona.goal}
+        </div>
+        <button
+          type="button"
+          className="persona-coach__change"
+          onClick={changePersona}
           disabled={loading}
+          data-testid="persona-coach-change"
         >
-          {personas.map((p) => (
-            <option key={p.id} value={p.id}>
-              {p.label}
-            </option>
-          ))}
-        </select>
-        {activePersona && (
-          <p className="persona-coach__blurb" data-testid="persona-coach-blurb">
-            {activePersona.blurb}
-          </p>
-        )}
+          ↔ Change
+        </button>
       </div>
 
-      {history.length > 0 && (
+      <div className="persona-coach__objections" data-testid="persona-coach-objections">
+        <span className="persona-coach__objections-label">Objections to expect:</span>
+        <ul>
+          {activePersona.objections.map((o) => (
+            <li key={o}>{o}</li>
+          ))}
+        </ul>
+      </div>
+
+      {history.length > 0 ? (
         <div className="persona-coach__transcript" data-testid="persona-coach-transcript">
           {history.map((m, i) => (
             <div key={i} className={`persona-coach__msg persona-coach__msg--${m.role}`}>
               <span className="persona-coach__role">
-                {m.role === "user" ? "You" : activePersona?.label ?? "Prospect"}
+                {m.role === "user" ? "You" : activePersona.name}
               </span>
               <p>{m.content}</p>
             </div>
           ))}
           {streaming && (
             <div className="persona-coach__msg persona-coach__msg--assistant">
-              <span className="persona-coach__role">{activePersona?.label ?? "Prospect"}</span>
+              <span className="persona-coach__role">{activePersona.name}</span>
               <p>{streaming}</p>
             </div>
           )}
         </div>
+      ) : (
+        <p className="persona-coach__empty">
+          Open the call below — {activePersona.name} will reply in character.
+        </p>
       )}
 
       <form className="persona-coach__form" onSubmit={handleSubmit} data-testid="persona-coach-form">
@@ -123,7 +195,7 @@ export default function PersonaCoachClient({ personas }: { personas: PersonaSumm
           onChange={(e) => setInput(e.target.value)}
           placeholder={
             history.length === 0
-              ? "Open the call. e.g. 'Hi Alex, thanks for taking the time. Mind if I share why I reached out?'"
+              ? "Open the call. e.g. 'Hi Marcus, thanks for the time. Mind if I share why I reached out?'"
               : "Your reply…"
           }
           rows={3}
@@ -134,7 +206,7 @@ export default function PersonaCoachClient({ personas }: { personas: PersonaSumm
             type="submit"
             className="persona-coach__submit"
             data-testid="persona-coach-submit"
-            disabled={loading || !input.trim() || !personaId}
+            disabled={loading || !input.trim()}
           >
             {loading ? "…" : history.length === 0 ? "Start call" : "Send"}
           </button>

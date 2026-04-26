@@ -1,26 +1,35 @@
 import { test, expect } from "@playwright/test";
 
 test.describe("CGM — /hub/persona-coach (AI Persona Coach)", () => {
-  test("page renders heading, persona picker (3 options), input, and submit button", async ({ page }) => {
+  test("page renders 3 persona cards (hardest/medium/easier) with badges and avatars", async ({ page }) => {
     await page.goto("/hub/persona-coach");
     await expect(page.locator("[data-testid='persona-coach']")).toBeVisible();
     await expect(page.locator("h1")).toContainText(/Persona Coach/i);
-    const select = page.locator("[data-testid='persona-coach-select']");
-    await expect(select).toBeVisible();
-    await expect(select.locator("option")).toHaveCount(3);
-    await expect(page.locator("[data-testid='persona-coach-input']")).toBeVisible();
-    await expect(page.locator("[data-testid='persona-coach-submit']")).toBeDisabled();
-    await expect(page.locator("[data-testid='persona-coach-blurb']")).toBeVisible();
+    const cards = page.locator("[data-testid='persona-card']");
+    await expect(cards).toHaveCount(3);
+    await expect(page.locator(".persona-card__badge--hardest")).toBeVisible();
+    await expect(page.locator(".persona-card__badge--medium")).toBeVisible();
+    await expect(page.locator(".persona-card__badge--easier")).toBeVisible();
   });
 
-  test("changing persona updates the blurb", async ({ page }) => {
+  test("clicking a card opens the call shell with selected bar + objections + change button", async ({ page }) => {
     await page.goto("/hub/persona-coach");
-    const select = page.locator("[data-testid='persona-coach-select']");
-    const blurb = page.locator("[data-testid='persona-coach-blurb']");
-    const cfoBlurb = await blurb.textContent();
-    await select.selectOption("smb-owner");
-    await expect(blurb).not.toHaveText(cfoBlurb ?? "");
-    await expect(blurb).toContainText(/stall|think about it|info/i);
+    await page.locator("[data-testid='persona-card'][data-persona-id='marcus-chen']").click();
+    await expect(page.locator("[data-testid='persona-coach-selected']")).toBeVisible();
+    await expect(page.locator("[data-testid='persona-coach-selected']")).toContainText("Marcus Chen");
+    await expect(page.locator("[data-testid='persona-coach-objections']")).toBeVisible();
+    await expect(page.locator("[data-testid='persona-coach-input']")).toBeVisible();
+    await expect(page.locator("[data-testid='persona-coach-submit']")).toBeDisabled();
+    await expect(page.locator("[data-testid='persona-coach-change']")).toBeVisible();
+  });
+
+  test("Change button returns to the picker grid", async ({ page }) => {
+    await page.goto("/hub/persona-coach");
+    await page.locator("[data-testid='persona-card'][data-persona-id='diana-whitfield']").click();
+    await expect(page.locator("[data-testid='persona-coach-selected']")).toBeVisible();
+    await page.locator("[data-testid='persona-coach-change']").click();
+    await expect(page.locator("[data-testid='persona-coach-grid']")).toBeVisible();
+    await expect(page.locator("[data-testid='persona-card']")).toHaveCount(3);
   });
 
   test("submitting streams a persona response into the transcript", async ({ page }) => {
@@ -33,7 +42,8 @@ test.describe("CGM — /hub/persona-coach (AI Persona Coach)", () => {
     });
 
     await page.goto("/hub/persona-coach");
-    await page.locator("[data-testid='persona-coach-input']").fill("Hi, thanks for taking the call. Mind if I share why I reached out?");
+    await page.locator("[data-testid='persona-card'][data-persona-id='marcus-chen']").click();
+    await page.locator("[data-testid='persona-coach-input']").fill("Hi Marcus, thanks for taking the call. Mind if I share why I reached out?");
     await page.locator("[data-testid='persona-coach-submit']").click();
 
     const transcript = page.locator("[data-testid='persona-coach-transcript']");
