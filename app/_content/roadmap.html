@@ -1,0 +1,684 @@
+<!-- STICKY NAV -->
+<nav class="phase-nav">
+  <div class="phase-nav-inner">
+    <div class="phase-nav-brand">Quad<span>Growth</span></div>
+    <div class="phase-nav-links">
+      <a href="#overview" class="phase-nav-link">Overview</a>
+      <a href="#phase1" class="phase-nav-link p1">Phase 1 — MVP</a>
+      <a href="#phase2" class="phase-nav-link p2">Phase 2 — Platform</a>
+      <a href="#phase3" class="phase-nav-link p3">Phase 3 — Full Works</a>
+      <a href="#build-guide" class="phase-nav-link">Build Guide</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-inner">
+    <div class="doc-label">
+      <span>Product Strategy Document</span>
+    </div>
+    <div class="brand-lockup">
+      <div class="brand-quad">Quad</div>
+      <div class="brand-growth">Growth</div>
+    </div>
+    <div class="doc-title">Client Portal — Product Roadmap &amp; Strategy</div>
+    <p class="doc-subtitle">
+      A phased plan for the QuadGrowth client-facing platform — what it is, what it does,
+      why it matters, and how to build it. Written for the CEO and used as the internal build guide.
+    </p>
+    <div class="header-meta">
+      <span><strong>Version</strong> 1.0</span>
+      <span><strong>Status</strong> Planning</span>
+      <span><strong>Owner</strong> QuadGrowth</span>
+      <span><strong>Audience</strong> CEO · Campaign Managers · Developers</span>
+      <span><strong>Classification</strong> Internal Confidential</span>
+    </div>
+  </div>
+</header>
+
+<!-- MAIN -->
+<main class="container">
+
+  <!-- OVERVIEW -->
+  <section class="section" id="overview">
+    <div class="section-eyebrow">Why This Exists</div>
+    <div class="section-title">The Client Portal Strategy</div>
+    <div class="gold-rule"></div>
+    <div class="section-body">
+      Dental clinic owners paying <strong>AUD 1,500–4,000 per month</strong> need to feel that investment every time they think about it — not just once a month on a call. The client portal is how we make that happen. It replaces the "trust me, it's working" approach with a permanent, live window into exactly what their money is doing.
+      <br><br>
+      Beyond retention, the portal is a <strong>sales tool</strong>. When a prospect sees a demo of what their dashboard would look like from day one, it closes deals. It signals that QuadGrowth is a professional, tech-forward agency — not a freelancer with a spreadsheet.
+      <br><br>
+      Built in three phases: an MVP that works from the first client, a full platform once we have real data to display, and a premium tier that turns QuadGrowth into a genuine SaaS product.
+    </div>
+
+    <!-- CEO SUMMARY BOX -->
+    <div class="ceo-box">
+      <div class="ceo-label">CEO Summary</div>
+      <div class="ceo-text">
+        The client portal is our retention engine and our best sales asset. A clinic owner who logs in weekly and sees their leads, bookings, and revenue growing does not cancel. One who gets a PDF once a month might. Phase 1 costs us almost nothing to build and makes every client feel like they are on a premium product. Phase 3 is where QuadGrowth becomes a platform business, not just an agency.
+      </div>
+    </div>
+  </section>
+
+  <!-- PHASE 1 -->
+  <section class="section" id="phase1">
+    <div class="section-eyebrow">Phase 1</div>
+    <div class="section-title">The MVP — Build Now</div>
+    <div class="gold-rule"></div>
+    <div class="section-body">
+      Eight features a clinic owner needs from day one. All data is entered manually by your campaign manager via Airtable — no complex integrations required. The goal is to make every client feel the service is worth the fee from the moment they log in. <strong>Build time: 1–2 weeks. Cost: negligible.</strong>
+    </div>
+
+    <div class="phase-block fade-in">
+      <div class="phase-header phase-1">
+        <div>
+          <div class="phase-badge p1"><span class="dot"></span> Phase 1 — MVP</div>
+          <div class="phase-title" style="margin-top:12px">Core Dashboard</div>
+          <div class="phase-subtitle">The eight features every client needs from day one. Campaign manager populates data manually. No API integrations required at this stage.</div>
+        </div>
+        <div class="phase-timing">
+          <div class="timing-label">When to build</div>
+          <div class="timing-value">Before first client</div>
+        </div>
+      </div>
+
+      <div class="feature-grid">
+        <div class="feature-card p1-card">
+          <div class="feature-icon icon-green">📊</div>
+          <div class="feature-name">Overview / KPI Summary</div>
+          <div class="feature-desc">The first screen a client sees. Big numbers: total leads this month, confirmed bookings, estimated revenue added, cost per lead. A simple trend arrow showing up or down vs last month.</div>
+          <div class="feature-why">Why it matters: clinic owners are busy. If the first screen doesn't answer "is it working?" in 5 seconds, they won't read further.</div>
+          <div class="tech-note">
+            <div class="tech-note-label">⚙ Tech</div>
+            <div>Static numbers updated by campaign manager in Airtable. Portal reads from Airtable API. No live ad platform integration at this stage.</div>
+          </div>
+        </div>
+
+        <div class="feature-card p1-card">
+          <div class="feature-icon icon-green">📋</div>
+          <div class="feature-name">Live Lead Feed</div>
+          <div class="feature-desc">A table of every enquiry: name (or anonymous ID), suburb, date received, source channel (Google / Meta / referral), and current status — New, Contacted, Booked, or Lost.</div>
+          <div class="feature-why">Why it matters: this is the most powerful trust signal we have. Seeing real names and dates makes the service tangible.</div>
+          <div class="tech-note">
+            <div class="tech-note-label">⚙ Tech</div>
+            <div>Airtable "Leads" table synced to portal. n8n automation creates a new record whenever a lead form is submitted on the landing page.</div>
+          </div>
+        </div>
+
+        <div class="feature-card p1-card">
+          <div class="feature-icon icon-green">📅</div>
+          <div class="feature-name">Monthly Reports</div>
+          <div class="feature-desc">A card per month showing the campaign manager's written summary: 3 wins this month, 1 challenge, next month's focus. Clean, readable, permanent record. Downloadable as PDF.</div>
+          <div class="feature-why">Why it matters: gives the relationship history and context. A new practice manager who joins mid-contract can immediately understand what's been done.</div>
+          <div class="tech-note">
+            <div class="tech-note-label">⚙ Tech</div>
+            <div>Campaign manager writes the report in a simple form inside the internal admin panel. Stored in Airtable. Rendered as formatted cards in the portal.</div>
+          </div>
+        </div>
+
+        <div class="feature-card p1-card">
+          <div class="feature-icon icon-green">🟢</div>
+          <div class="feature-name">Campaign Status</div>
+          <div class="feature-desc">A clear status panel for each active campaign: Google Ads (Live / Paused / Setup), Meta Ads (Live / Paused / Not active), Google Business (Optimised / Action needed), Landing Page (Live / Pending).</div>
+          <div class="feature-why">Why it matters: reassures clients that their campaigns didn't just "stop" between calls. Proactively surfaces any issues.</div>
+          <div class="tech-note">
+            <div class="tech-note-label">⚙ Tech</div>
+            <div>Status flags set manually by campaign manager. Later in Phase 2, Google Ads API can automate campaign status detection.</div>
+          </div>
+        </div>
+
+        <div class="feature-card p1-card">
+          <div class="feature-icon icon-green">💰</div>
+          <div class="feature-name">ROI Calculator</div>
+          <div class="feature-desc">Simple interactive widget: "If each new patient is worth AUD [X] per year and we've brought you [Y] patients, estimated revenue added = [Z]." Uses their actual lead and booking data — not a generic estimate.</div>
+          <div class="feature-why">Why it matters: turns the monthly fee into a number that looks small next to the revenue generated. Strongest retention tool we have.</div>
+          <div class="tech-note">
+            <div class="tech-note-label">⚙ Tech</div>
+            <div>JavaScript calculation using Airtable-stored patient lifetime value (set at onboarding) × confirmed bookings count. Updates live as new bookings are logged.</div>
+          </div>
+        </div>
+
+        <div class="feature-card p1-card">
+          <div class="feature-icon icon-green">📞</div>
+          <div class="feature-name">Next Strategy Call</div>
+          <div class="feature-desc">The date and time of the next scheduled strategy call, with a direct booking link to reschedule if needed. Name and photo of their campaign manager. A brief note on what the call will cover.</div>
+          <div class="feature-why">Why it matters: keeps the relationship visible. The campaign manager doesn't feel abstract — they have a face, a name, and a scheduled time.</div>
+          <div class="tech-note">
+            <div class="tech-note-label">⚙ Tech</div>
+            <div>Calendly integration for live booking links. Campaign manager details stored in Airtable client record. Call agenda set manually by campaign manager.</div>
+          </div>
+        </div>
+
+        <div class="feature-card p1-card">
+          <div class="feature-icon icon-green">📄</div>
+          <div class="feature-name">Package &amp; Account Info</div>
+          <div class="feature-desc">Their current package (Starter / Growth / Scale), monthly fee, contract start date, next renewal date, and their campaign manager contact details. Clean and factual.</div>
+          <div class="feature-why">Why it matters: removes ambiguity. Clients always know exactly what they are on and when their next renewal is — no surprises, no awkward conversations.</div>
+          <div class="tech-note">
+            <div class="tech-note-label">⚙ Tech</div>
+            <div>Pulled from Airtable client record set at onboarding. Package name, fee, dates — all stored at contract sign. Editable by admin only.</div>
+          </div>
+        </div>
+
+        <div class="feature-card p1-card">
+          <div class="feature-icon icon-green">🗺</div>
+          <div class="feature-name">Journey Timeline</div>
+          <div class="feature-desc">A visual timeline showing where the client is in the QuadGrowth process: Onboarding → Setup → Launch → Month 1 → Month 2 → Consistent Growth. Current stage highlighted. Key milestone dates shown.</div>
+          <div class="feature-why">Why it matters: especially valuable in months 1–2 when results are still building. Reminds clients they are in the right phase, not behind schedule.</div>
+          <div class="tech-note">
+            <div class="tech-note-label">⚙ Tech</div>
+            <div>Phase set manually at onboarding, auto-advances by date after setup period. Visual component only — no external API needed.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PHASE 2 -->
+  <section class="section" id="phase2">
+    <div class="section-eyebrow">Phase 2</div>
+    <div class="section-title">Full Platform — After First Clients</div>
+    <div class="gold-rule"></div>
+    <div class="section-body">
+      Once you have real client data flowing, these eight features turn the portal into a genuinely powerful reporting platform. Most require API integrations — Google Ads, Google Business Profile, Google Analytics 4. <strong>Build time: 4–8 weeks. Requires developer.</strong>
+    </div>
+
+    <div class="phase-block fade-in">
+      <div class="phase-header phase-2">
+        <div>
+          <div class="phase-badge p2"><span class="dot"></span> Phase 2 — Full Platform</div>
+          <div class="phase-title" style="margin-top:12px">Data-Driven Reporting</div>
+          <div class="phase-subtitle">Live integrations with Google Ads, Meta, and Google Business Profile. Real-time data, automated reporting, and geographic visualisation. Requires developer resource.</div>
+        </div>
+        <div class="phase-timing">
+          <div class="timing-label">When to build</div>
+          <div class="timing-value">After 3–5 clients</div>
+        </div>
+      </div>
+
+      <div class="feature-grid">
+        <div class="feature-card p2-card">
+          <div class="feature-icon icon-blue">🗺</div>
+          <div class="feature-name">Suburb Lead Heatmap</div>
+          <div class="feature-desc">A visual map showing which suburbs the clinic's leads are coming from. Darker = more leads. Helps the client understand where their catchment area actually is vs where they assumed.</div>
+          <div class="feature-why">Why it matters: clients love seeing their suburb "light up." Creates a shareable moment. Also useful data for targeting decisions.</div>
+          <div class="tech-note">
+            <div class="tech-note-label">⚙ Tech</div>
+            <div>Lead suburb data from Airtable mapped using Mapbox or Google Maps JS API. Colour intensity from lead count per suburb. Updated daily via n8n sync.</div>
+          </div>
+        </div>
+
+        <div class="feature-card p2-card">
+          <div class="feature-icon icon-blue">🎨</div>
+          <div class="feature-name">Ad Creative Gallery</div>
+          <div class="feature-desc">A gallery of every ad currently running for the client — image/copy previews, platform (Google/Meta), impressions, clicks, click-through rate, and conversion rate per creative.</div>
+          <div class="feature-why">Why it matters: makes the work visible. Clients often don't know what their ads look like. Seeing them builds confidence and trust in the campaign.</div>
+          <div class="tech-note">
+            <div class="tech-note-label">⚙ Tech</div>
+            <div>Google Ads API + Meta Marketing API for creative assets and performance stats. Campaign manager uploads creative previews; stats auto-populate from API. Refreshed daily.</div>
+          </div>
+        </div>
+
+        <div class="feature-card p2-card">
+          <div class="feature-icon icon-blue">🏆</div>
+          <div class="feature-name">Local Competitor Snapshot</div>
+          <div class="feature-desc">How the client's clinic ranks locally vs 3–5 nearby competitors: Google rating comparison, review count, estimated search visibility, website quality score. Updated monthly.</div>
+          <div class="feature-why">Why it matters: competition is a powerful motivator. Showing a client they are ranked #3 in their suburb motivates them to invest more and stay longer.</div>
+          <div class="tech-note">
+            <div class="tech-note-label">⚙ Tech</div>
+            <div>Outscraper API pulls competitor data monthly. Visibility score estimated from keyword rank tracking (DataForSEO or SERPWatcher API). Stored in Airtable, refreshed monthly via n8n.</div>
+          </div>
+        </div>
+
+        <div class="feature-card p2-card">
+          <div class="feature-icon icon-blue">⭐</div>
+          <div class="feature-name">Google Business Profile Monitor</div>
+          <div class="feature-desc">Live feed of new Google reviews — star rating, review text, date, and whether it's been replied to. Profile health score: completeness of photos, hours, services, posts.</div>
+          <div class="feature-why">Why it matters: negative reviews that go unanswered kill new patient conversions. This keeps the client aware and enables fast response.</div>
+          <div class="tech-note">
+            <div class="tech-note-label">⚙ Tech</div>
+            <div>Google Business Profile API (My Business API) for review data. Profile completeness scored against a checklist of required fields. Webhook triggers Slack alert for new 1–3 star reviews.</div>
+          </div>
+        </div>
+
+        <div class="feature-card p2-card">
+          <div class="feature-icon icon-blue">🔻</div>
+          <div class="feature-name">Conversion Funnel</div>
+          <div class="feature-desc">A visual funnel: Impressions → Clicks → Landing Page Visits → Lead Form Submissions → Bookings Confirmed → Attended. Conversion rate at each stage. Drop-off points highlighted.</div>
+          <div class="feature-why">Why it matters: shows the client exactly where in the funnel we are optimising. If the booking rate is low, it's a clinic-side issue, not a campaign issue — the data proves it.</div>
+          <div class="tech-note">
+            <div class="tech-note-label">⚙ Tech</div>
+            <div>Google Analytics 4 for page-level events. Airtable for lead-to-booking tracking. Attended count entered manually by campaign manager. Funnel built in custom JS using GA4 + Airtable data.</div>
+          </div>
+        </div>
+
+        <div class="feature-card p2-card">
+          <div class="feature-icon icon-blue">🔍</div>
+          <div class="feature-name">Keyword Rank Tracker</div>
+          <div class="feature-desc">How the clinic ranks on Google for key search terms in their suburb: "dentist [suburb]", "dental clinic [suburb]", "emergency dentist [suburb]" etc. Position shown weekly with trend arrows.</div>
+          <div class="feature-why">Why it matters: local search position is a core deliverable. Showing rank improvements over time is evidence of work done even when leads are slow.</div>
+          <div class="tech-note">
+            <div class="tech-note-label">⚙ Tech</div>
+            <div>DataForSEO or SERPWatcher API. 5–10 target keywords tracked weekly per client. Results stored in Airtable, displayed as sparkline charts in the portal.</div>
+          </div>
+        </div>
+
+        <div class="feature-card p2-card">
+          <div class="feature-icon icon-blue">💸</div>
+          <div class="feature-name">Ad Budget Tracker</div>
+          <div class="feature-desc">Monthly ad spend vs planned budget. Amount spent to date this month, amount remaining, estimated spend at current pace. Breakdown by platform (Google vs Meta).</div>
+          <div class="feature-why">Why it matters: clients want to know their ad budget is being used, not banked. Transparency on spend builds trust and pre-empts "where did my money go" conversations.</div>
+          <div class="tech-note">
+            <div class="tech-note-label">⚙ Tech</div>
+            <div>Google Ads API + Meta Marketing API for spend data. Budget set in Airtable client record by campaign manager. Spend vs budget calculated and displayed daily.</div>
+          </div>
+        </div>
+
+        <div class="feature-card p2-card">
+          <div class="feature-icon icon-blue">💬</div>
+          <div class="feature-name">Messaging Centre</div>
+          <div class="feature-desc">A direct comms thread between the client and their campaign manager inside the portal. Campaign manager can post updates, flag issues, share wins. Client can ask questions without emailing.</div>
+          <div class="feature-why">Why it matters: centralises the relationship. Instead of scattered emails and Slack messages, everything lives in one place attached to the client record.</div>
+          <div class="tech-note">
+            <div class="tech-note-label">⚙ Tech</div>
+            <div>Simple threaded message store in Airtable or Supabase. Campaign manager posts via internal admin panel. Client reads and replies in portal. Email notification on new message via n8n.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PHASE 3 -->
+  <section class="section" id="phase3">
+    <div class="section-eyebrow">Phase 3</div>
+    <div class="section-title">The Full Works — Premium Platform</div>
+    <div class="gold-rule"></div>
+    <div class="section-body">
+      This is where QuadGrowth becomes a platform, not just an agency. Twelve features that create deep lock-in, support premium pricing, enable scale package upsells, and open the door to a white-label product for partner agencies. <strong>Build time: 3–6 months. Dedicated developer or small team required.</strong>
+    </div>
+
+    <div class="phase-block fade-in">
+      <div class="phase-header phase-3">
+        <div>
+          <div class="phase-badge p3"><span class="dot"></span> Phase 3 — The Full Works</div>
+          <div class="phase-title" style="margin-top:12px">Premium SaaS Platform</div>
+          <div class="phase-subtitle">Deep AI integration, multi-location support, patient reactivation tools, white-label capability, and automated case study generation. This is where QuadGrowth becomes a product company.</div>
+        </div>
+        <div class="phase-timing">
+          <div class="timing-label">When to build</div>
+          <div class="timing-value">At 10–15 clients</div>
+        </div>
+      </div>
+
+      <div class="feature-grid">
+        <div class="feature-card p3-card">
+          <div class="feature-icon icon-amber">🤖</div>
+          <div class="feature-name">AI Growth Assistant</div>
+          <div class="feature-desc">A chat interface clients can use to ask questions about their campaign. "Why did leads drop this week?" "What's my CPL trend?" "How am I doing vs last month?" Powered by Claude API with their data injected as context.</div>
+          <div class="feature-why">Why it matters: makes the data feel intelligent and personal. Replaces one-off emails to their campaign manager with instant answers.</div>
+          <div class="tech-note">
+            <div class="tech-note-label">⚙ Tech</div>
+            <div>Claude API with client's Airtable data assembled as context on each query. Uses tool use to query live metrics. Guardrails prevent off-topic or harmful responses. Logged for campaign manager review.</div>
+          </div>
+        </div>
+
+        <div class="feature-card p3-card">
+          <div class="feature-icon icon-amber">🏢</div>
+          <div class="feature-name">Multi-Location Dashboard</div>
+          <div class="feature-desc">For Scale package clients with 2+ locations: a single unified view showing performance across all locations, with drill-down per clinic. Aggregate KPIs plus per-location breakdown.</div>
+          <div class="feature-why">Why it matters: makes the Scale package feel meaningfully different from Growth. A dentist group with 3 clinics genuinely needs this and will pay for it.</div>
+          <div class="tech-note">
+            <div class="tech-note-label">⚙ Tech</div>
+            <div>Each location stored as a separate Airtable client record linked to a parent group record. Portal aggregates across all linked records. Separate Google Ads MCC (manager account) for multi-location ad management.</div>
+          </div>
+        </div>
+
+        <div class="feature-card p3-card">
+          <div class="feature-icon icon-amber">⭐</div>
+          <div class="feature-name">Review Manager</div>
+          <div class="feature-desc">Clients can read, flag, and draft replies to Google reviews directly in the portal. AI drafts a suggested reply — AHPRA-compliant, no clinical outcome references — which the client can edit and post.</div>
+          <div class="feature-why">Why it matters: removes the barrier of logging into Google. AI replies ensure consistency and compliance. A sticky feature that clients use weekly.</div>
+          <div class="tech-note">
+            <div class="tech-note-label">⚙ Tech</div>
+            <div>Google Business Profile API for reading and posting reviews. Claude API drafts replies with AHPRA advertising guideline constraints in the system prompt. Post action goes via GBP API after client approval.</div>
+          </div>
+        </div>
+
+        <div class="feature-card p3-card">
+          <div class="feature-icon icon-amber">🔄</div>
+          <div class="feature-name">Patient Reactivation Tool</div>
+          <div class="feature-desc">A campaign builder for re-engaging lapsed patients. Client uploads a de-identified list of patients overdue for a check-up. QuadGrowth builds a targeted campaign to get them back in the chair.</div>
+          <div class="feature-why">Why it matters: every dental clinic has hundreds of lapsed patients. Reactivation is the fastest, cheapest way to fill slots — and it's something we can charge for as an add-on.</div>
+          <div class="tech-note">
+            <div class="tech-note-label">⚙ Tech</div>
+            <div>Client uploads CSV of lapsed patients (anonymised). n8n pipeline builds a custom Meta audience from the data. Campaign manager builds and activates the reactivation campaign. Results tracked in Airtable.</div>
+          </div>
+        </div>
+
+        <div class="feature-card p3-card">
+          <div class="feature-icon icon-amber">📄</div>
+          <div class="feature-name">PDF Report Generator</div>
+          <div class="feature-desc">One-click branded PDF of the client's monthly performance. QuadGrowth header, their clinic name, all KPIs, funnel data, key wins, and next month's plan. Client can share with their business partner or accountant.</div>
+          <div class="feature-why">Why it matters: makes our reporting portable and shareable. When a client shows their accountant how well the marketing is performing, it reinforces the decision to keep paying.</div>
+          <div class="tech-note">
+            <div class="tech-note-label">⚙ Tech</div>
+            <div>Puppeteer or WeasyPrint renders a hidden high-fidelity HTML report page to PDF. Triggered by client button in portal. Stored in Supabase Storage, emailed as link. Full QuadGrowth branding applied automatically.</div>
+          </div>
+        </div>
+
+        <div class="feature-card p3-card">
+          <div class="feature-icon icon-amber">🎁</div>
+          <div class="feature-name">Referral Program</div>
+          <div class="feature-desc">Clients who refer another dental clinic get a credit towards their next month's fee. In-portal referral link generator, tracking dashboard showing referral status and credit earned.</div>
+          <div class="feature-why">Why it matters: turns happy clients into a sales channel. A referred lead from an existing client closes at 3–5× the rate of a cold lead. Practically free acquisition.</div>
+          <div class="tech-note">
+            <div class="tech-note-label">⚙ Tech</div>
+            <div>Unique referral code generated per client stored in Airtable. Landing page referral code capture. n8n checks referral status and triggers credit when referred client signs and pays month 1. Displayed in portal dashboard.</div>
+          </div>
+        </div>
+
+        <div class="feature-card p3-card">
+          <div class="feature-icon icon-amber">📈</div>
+          <div class="feature-name">Appointment Slot Tracker</div>
+          <div class="feature-desc">Client manually logs (or syncs) their weekly appointment capacity and bookings filled. Dashboard shows capacity utilisation trend over time — the headline metric that proves the whole service is working.</div>
+          <div class="feature-why">Why it matters: this is the metric we talk about in sales ("60% to 95% in 6 weeks"). Having it tracked in the portal makes that claim provable and client-owned.</div>
+          <div class="tech-note">
+            <div class="tech-note-label">⚙ Tech</div>
+            <div>Client enters weekly slots available and slots booked via a simple portal form (or syncs via Cliniko / Nookal API if available). Capacity % calculated and displayed as a trend chart using Chart.js.</div>
+          </div>
+        </div>
+
+        <div class="feature-card p3-card">
+          <div class="feature-icon icon-amber">📋</div>
+          <div class="feature-name">Contracts &amp; Invoices</div>
+          <div class="feature-desc">Full document history: signed contract, all invoices, payment status. Client can download any document at any time without emailing. Invoice auto-generated monthly and attached to their record.</div>
+          <div class="feature-why">Why it matters: removes admin friction. Clients never need to "find the email" for their invoice again. Also reduces payment disputes — they can see exactly what was agreed and when.</div>
+          <div class="tech-note">
+            <div class="tech-note-label">⚙ Tech</div>
+            <div>Contracts stored in Supabase Storage, signed via DocuSign webhook. Invoices generated via Stripe or Xero API. Stored and linked in Airtable client record. Portal displays status and download links.</div>
+          </div>
+        </div>
+
+        <div class="feature-card p3-card">
+          <div class="feature-icon icon-amber">✅</div>
+          <div class="feature-name">Content Approvals</div>
+          <div class="feature-desc">Campaign manager submits new ad creatives (image + copy) for client review before going live. Client sees the ad exactly as it will appear, approves or requests changes with a comment. Approval tracked with timestamp.</div>
+          <div class="feature-why">Why it matters: removes the "I didn't know that was going live" conversation. Creates a documented approval trail — important for AHPRA compliance.</div>
+          <div class="tech-note">
+            <div class="tech-note-label">⚙ Tech</div>
+            <div>Creative submitted via internal admin panel to Airtable. Client notified by email. Portal shows pending approvals with approve/reject/comment. Approval status synced to campaign manager's Airtable view. AHPRA compliance checklist attached to each creative submission.</div>
+          </div>
+        </div>
+
+        <div class="feature-card p3-card">
+          <div class="feature-icon icon-amber">📊</div>
+          <div class="feature-name">Case Study Auto-Builder</div>
+          <div class="feature-desc">At the 60-day mark, the portal auto-generates a draft case study from the client's actual data: before/after capacity, leads generated, estimated revenue added. Campaign manager reviews and publishes (with client consent).</div>
+          <div class="feature-why">Why it matters: we talk about case studies in every sales call. Automating their creation means we actually produce them. Each one becomes a sales asset used for months.</div>
+          <div class="tech-note">
+            <div class="tech-note-label">⚙ Tech</div>
+            <div>n8n trigger at day 60 pulls all client metrics from Airtable. Claude API drafts the case study using a structured template. Campaign manager edits in admin panel. Requires explicit written consent from client before any external use. AHPRA check: no clinical outcome testimonials.</div>
+          </div>
+        </div>
+
+        <div class="feature-card p3-card">
+          <div class="feature-icon icon-amber">📉</div>
+          <div class="feature-name">Benchmark Comparisons</div>
+          <div class="feature-desc">Anonymous benchmarks showing how the client compares to similar QuadGrowth clients: average CPL, average leads per month, average capacity utilisation. Client's position shown relative to the anonymised group.</div>
+          <div class="feature-why">Why it matters: benchmarks create competitive context. A client at 70% capacity who sees the average is 88% is motivated to invest more. Also reinforces the network effect of QuadGrowth's data.</div>
+          <div class="tech-note">
+            <div class="tech-note-label">⚙ Tech</div>
+            <div>All client KPIs stored in Airtable. Benchmark aggregation query runs weekly, stores anonymous averages by package tier and suburb type. Individual client data is never exposed — aggregate only. Displayed as percentile charts in portal.</div>
+          </div>
+        </div>
+
+        <div class="feature-card p3-card">
+          <div class="feature-icon icon-amber">🏷</div>
+          <div class="feature-name">White-Label Option</div>
+          <div class="feature-desc">Partner agencies can access QuadGrowth's platform under their own brand. Custom domain (portal.theiragency.com.au), their logo, their colours. QuadGrowth powers the backend, partner owns the client relationship.</div>
+          <div class="feature-why">Why it matters: opens a B2B revenue stream. A dental marketing agency in Queensland could use QuadGrowth's infrastructure and pay a per-client SaaS fee. No additional delivery work required from us.</div>
+          <div class="tech-note">
+            <div class="tech-note-label">⚙ Tech</div>
+            <div>Multi-tenant architecture with per-partner branding config stored in database. Custom domain support via Vercel or Cloudflare. Partner admin panel for client management. Requires multi-tenant rebuild of auth and data access layer. Significant engineering investment.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BUILD GUIDE -->
+  <section class="section" id="build-guide">
+    <div class="section-eyebrow">Build Guide</div>
+    <div class="section-title">How to Build It — Priorities &amp; Tech</div>
+    <div class="gold-rule"></div>
+    <div class="section-body">
+      A practical guide for whoever is building the portal. What to build first, what data source it needs, and how complex it is. <strong>Phase 1 requires no back-end engineering — a campaign manager can populate everything manually via Airtable.</strong>
+    </div>
+
+    <table class="priority-table">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>Phase</th>
+          <th>Data source</th>
+          <th>Complexity</th>
+          <th>Why first</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Overview / KPI</td>
+          <td><span class="tag tag-mvp">MVP</span></td>
+          <td>Airtable (manual)</td>
+          <td>Low</td>
+          <td>First screen. Must be compelling from day one.</td>
+        </tr>
+        <tr>
+          <td>Live Lead Feed</td>
+          <td><span class="tag tag-mvp">MVP</span></td>
+          <td>Airtable via n8n</td>
+          <td>Low</td>
+          <td>Most powerful trust signal. Automated from landing page form.</td>
+        </tr>
+        <tr>
+          <td>ROI Calculator</td>
+          <td><span class="tag tag-mvp">MVP</span></td>
+          <td>Airtable (manual + JS)</td>
+          <td>Low</td>
+          <td>Justifies the fee. Strongest retention tool in Phase 1.</td>
+        </tr>
+        <tr>
+          <td>Campaign Status</td>
+          <td><span class="tag tag-mvp">MVP</span></td>
+          <td>Airtable (manual)</td>
+          <td>Low</td>
+          <td>Reassures clients between calls. 15 min to update.</td>
+        </tr>
+        <tr>
+          <td>Monthly Reports</td>
+          <td><span class="tag tag-mvp">MVP</span></td>
+          <td>Admin form → Airtable</td>
+          <td>Low</td>
+          <td>Replaces email PDF. Permanent, shareable record.</td>
+        </tr>
+        <tr>
+          <td>Journey Timeline</td>
+          <td><span class="tag tag-mvp">MVP</span></td>
+          <td>Airtable (manual)</td>
+          <td>Low</td>
+          <td>Critical in months 1–2. Manages expectations proactively.</td>
+        </tr>
+        <tr>
+          <td>Next Call Panel</td>
+          <td><span class="tag tag-mvp">MVP</span></td>
+          <td>Calendly API</td>
+          <td>Low–Med</td>
+          <td>Humanises the relationship. Campaign manager visible.</td>
+        </tr>
+        <tr>
+          <td>Package Info</td>
+          <td><span class="tag tag-mvp">MVP</span></td>
+          <td>Airtable (manual)</td>
+          <td>Low</td>
+          <td>Removes ambiguity. Set once at onboarding.</td>
+        </tr>
+        <tr>
+          <td>Conversion Funnel</td>
+          <td><span class="tag tag-p2">Phase 2</span></td>
+          <td>GA4 + Airtable</td>
+          <td>Medium</td>
+          <td>Separates campaign performance from clinic-side booking rate.</td>
+        </tr>
+        <tr>
+          <td>Ad Creative Gallery</td>
+          <td><span class="tag tag-p2">Phase 2</span></td>
+          <td>Google Ads API + Meta API</td>
+          <td>Medium–High</td>
+          <td>Makes invisible work visible. High trust value.</td>
+        </tr>
+        <tr>
+          <td>GBP Monitor</td>
+          <td><span class="tag tag-p2">Phase 2</span></td>
+          <td>Google Business Profile API</td>
+          <td>Medium</td>
+          <td>Reviews directly impact new patient conversions.</td>
+        </tr>
+        <tr>
+          <td>Keyword Tracker</td>
+          <td><span class="tag tag-p2">Phase 2</span></td>
+          <td>DataForSEO / SERPWatcher</td>
+          <td>Medium</td>
+          <td>Proves local search work is delivering ranking improvements.</td>
+        </tr>
+        <tr>
+          <td>Budget Tracker</td>
+          <td><span class="tag tag-p2">Phase 2</span></td>
+          <td>Google Ads API + Meta API</td>
+          <td>Medium</td>
+          <td>Transparency on ad spend. Removes billing questions.</td>
+        </tr>
+        <tr>
+          <td>Suburb Heatmap</td>
+          <td><span class="tag tag-p2">Phase 2</span></td>
+          <td>Airtable + Mapbox</td>
+          <td>Medium</td>
+          <td>Visual wow factor. Easy to demo to new prospects.</td>
+        </tr>
+        <tr>
+          <td>Competitor Snapshot</td>
+          <td><span class="tag tag-p2">Phase 2</span></td>
+          <td>Outscraper + DataForSEO</td>
+          <td>Medium</td>
+          <td>Competition motivates investment. Strong retention lever.</td>
+        </tr>
+        <tr>
+          <td>Messaging Centre</td>
+          <td><span class="tag tag-p2">Phase 2</span></td>
+          <td>Airtable / Supabase</td>
+          <td>Medium</td>
+          <td>Centralises comms. Reduces email fragmentation.</td>
+        </tr>
+        <tr>
+          <td>AI Growth Assistant</td>
+          <td><span class="tag tag-p3">Phase 3</span></td>
+          <td>Claude API + Airtable</td>
+          <td>High</td>
+          <td>Premium differentiator. Reduces support load on campaign managers.</td>
+        </tr>
+        <tr>
+          <td>Review Manager</td>
+          <td><span class="tag tag-p3">Phase 3</span></td>
+          <td>GBP API + Claude API</td>
+          <td>High</td>
+          <td>Sticky weekly feature. AHPRA-compliant AI replies.</td>
+        </tr>
+        <tr>
+          <td>PDF Report Generator</td>
+          <td><span class="tag tag-p3">Phase 3</span></td>
+          <td>Puppeteer / WeasyPrint</td>
+          <td>Medium</td>
+          <td>Makes reports portable. Shared with accountants and partners.</td>
+        </tr>
+        <tr>
+          <td>Patient Reactivation</td>
+          <td><span class="tag tag-p3">Phase 3</span></td>
+          <td>Meta API + n8n + CSV</td>
+          <td>High</td>
+          <td>Fastest ROI for clients. Potential add-on revenue stream.</td>
+        </tr>
+        <tr>
+          <td>Slot Tracker</td>
+          <td><span class="tag tag-p3">Phase 3</span></td>
+          <td>Manual / Cliniko API</td>
+          <td>Medium</td>
+          <td>Tracks the headline KPI we sell on. Makes results provable.</td>
+        </tr>
+        <tr>
+          <td>Content Approvals</td>
+          <td><span class="tag tag-p3">Phase 3</span></td>
+          <td>Airtable + admin panel</td>
+          <td>Medium</td>
+          <td>AHPRA compliance trail. Removes "didn't know" disputes.</td>
+        </tr>
+        <tr>
+          <td>Referral Program</td>
+          <td><span class="tag tag-p3">Phase 3</span></td>
+          <td>Airtable + n8n + Stripe</td>
+          <td>Medium</td>
+          <td>Turns clients into salespeople. Lowest CAC of any channel.</td>
+        </tr>
+        <tr>
+          <td>Benchmark Compare</td>
+          <td><span class="tag tag-p3">Phase 3</span></td>
+          <td>Airtable aggregate query</td>
+          <td>Medium</td>
+          <td>Network effect. More clients = more valuable benchmarks.</td>
+        </tr>
+        <tr>
+          <td>Case Study Builder</td>
+          <td><span class="tag tag-p3">Phase 3</span></td>
+          <td>Airtable + Claude API</td>
+          <td>Medium</td>
+          <td>Automates sales content creation. Every client is a case study.</td>
+        </tr>
+        <tr>
+          <td>Contracts &amp; Invoices</td>
+          <td><span class="tag tag-p3">Phase 3</span></td>
+          <td>Stripe/Xero + DocuSign</td>
+          <td>High</td>
+          <td>Removes all admin friction. Reduces payment queries.</td>
+        </tr>
+        <tr>
+          <td>Multi-Location View</td>
+          <td><span class="tag tag-p3">Phase 3</span></td>
+          <td>Airtable (grouped)</td>
+          <td>High</td>
+          <td>Unlocks Scale package value. Dental group clients.</td>
+        </tr>
+        <tr>
+          <td>White-Label Platform</td>
+          <td><span class="tag tag-p3">Phase 3</span></td>
+          <td>Multi-tenant rebuild</td>
+          <td>Very High</td>
+          <td>B2B SaaS revenue. Partner agencies. Major engineering investment.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div style="height: 80px;"></div>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">Quad<span>Growth</span></div>
+    <div class="footer-meta">
+      Client Portal — Product Roadmap v1.0<br>
+      quadgrowth.com.au · Internal Confidential · © 2026 QuadGrowth
+    </div>
+  </div>
+</footer>

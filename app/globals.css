@@ -1,0 +1,49 @@
+/* QuadGrowth brand tokens — match across portal, sales hub, marketing site */
+:root {
+  --navy-dark: #111d33;
+  --navy: #1B2A4A;
+  --navy-light: #2C3E6B;
+  --gold: #C8963E;
+  --gold-light: #E8B96A;
+  --cream: #F5F0E8;
+  --cream-dark: #EDE6D6;
+  --text: #2C2C2C;
+  --muted: #777;
+
+  --font-playfair: 'Playfair Display', serif;
+  --font-dm-sans: 'DM Sans', sans-serif;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: var(--font-dm-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: var(--navy-dark);
+  color: var(--cream);
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-playfair);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+a {
+  color: var(--gold);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--gold-light);
+}
