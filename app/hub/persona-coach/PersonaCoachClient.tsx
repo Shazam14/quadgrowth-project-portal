@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useBrowserTts } from "../_lib/useBrowserTts";
+import { useBrowserStt } from "../_lib/useBrowserStt";
 import type { Difficulty } from "./_data/personas";
 
 type PersonaSummary = {
@@ -36,12 +37,28 @@ export default function PersonaCoachClient({ personas }: { personas: PersonaSumm
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const tts = useBrowserTts();
+  const stt = useBrowserStt();
+  const sttBaseRef = useRef("");
 
   const activePersona = personas.find((p) => p.id === personaId);
+
+  function toggleMic() {
+    if (stt.listening) {
+      stt.stop();
+      return;
+    }
+    tts.stop();
+    sttBaseRef.current = input.trim();
+    stt.start((text) => {
+      const base = sttBaseRef.current;
+      setInput(base ? `${base} ${text}` : text);
+    });
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!input.trim() || loading || !personaId || phase !== "active") return;
+    if (stt.listening) stt.stop();
     const userMsg: Msg = { role: "user", content: input.trim() };
     const next = [...history, userMsg];
     setHistory(next);
@@ -79,6 +96,7 @@ export default function PersonaCoachClient({ personas }: { personas: PersonaSumm
 
   function selectPersona(id: string) {
     tts.stop();
+    stt.stop();
     setPersonaId(id);
     setHistory([]);
     setStreaming("");
@@ -88,6 +106,7 @@ export default function PersonaCoachClient({ personas }: { personas: PersonaSumm
 
   function changePersona() {
     tts.stop();
+    stt.stop();
     setPersonaId(null);
     setHistory([]);
     setStreaming("");
@@ -107,7 +126,16 @@ export default function PersonaCoachClient({ personas }: { personas: PersonaSumm
 
   function endSession() {
     tts.stop();
+    stt.stop();
     setPhase("ended");
+  }
+
+  function statusText() {
+    if (phase === "idle") return "Ready — start the session when you are.";
+    if (phase === "ended") return "Session ended.";
+    if (stt.listening) return "Listening…";
+    if (tts.isSpeaking) return `${activePersona?.name ?? "Persona"} speaking…`;
+    return "Live call.";
   }
 
   if (!activePersona) {
@@ -183,11 +211,7 @@ export default function PersonaCoachClient({ personas }: { personas: PersonaSumm
         <span className="persona-coach__voice" data-testid="persona-coach-voice">
           {tts.voiceLabel}
         </span>
-        <span className="persona-coach__status">
-          {phase === "idle" && "Ready — start the session when you are."}
-          {phase === "active" && (tts.isSpeaking ? `${activePersona.name} speaking…` : "Live call.")}
-          {phase === "ended" && "Session ended."}
-        </span>
+        <span className="persona-coach__status">{statusText()}</span>
       </div>
 
       {phase === "idle" ? (
@@ -246,6 +270,25 @@ export default function PersonaCoachClient({ personas }: { personas: PersonaSumm
               >
                 {loading ? "…" : "Send"}
               </button>
+              {phase === "active" && (
+                <button
+                  type="button"
+                  className={`persona-coach__mic${stt.listening ? " persona-coach__mic--listening" : ""}`}
+                  onClick={toggleMic}
+                  disabled={loading || !stt.supported}
+                  aria-pressed={stt.listening}
+                  data-testid="persona-coach-mic"
+                  title={
+                    stt.supported
+                      ? stt.listening
+                        ? "Stop dictation"
+                        : "Start dictation"
+                      : "Mic not supported in this browser"
+                  }
+                >
+                  {stt.listening ? "■ Stop" : "● Mic"}
+                </button>
+              )}
               {phase === "active" && (
                 <button
                   type="button"

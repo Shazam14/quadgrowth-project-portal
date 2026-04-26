@@ -9,12 +9,13 @@ test.describe("CGM — /hub/pitch-coach (AI Pitch Coach)", () => {
     await expect(page.locator("[data-testid='pitch-coach-start']")).toBeVisible();
   });
 
-  test("Start session reveals coach opener, input, and end button", async ({ page }) => {
+  test("Start session reveals coach opener, input, mic, and end button", async ({ page }) => {
     await page.goto("/hub/pitch-coach");
     await page.locator("[data-testid='pitch-coach-start']").click();
     await expect(page.locator("[data-testid='pitch-coach-transcript']")).toContainText(/Pitch coach here/);
     await expect(page.locator("[data-testid='pitch-coach-input']")).toBeEnabled();
     await expect(page.locator("[data-testid='pitch-coach-submit']")).toBeDisabled();
+    await expect(page.locator("[data-testid='pitch-coach-mic']")).toBeVisible();
     await expect(page.locator("[data-testid='pitch-coach-end']")).toBeVisible();
   });
 
@@ -48,12 +49,13 @@ test.describe("CGM — /hub/pitch-coach (AI Pitch Coach)", () => {
     await expect(transcript).toContainText(/Next move/);
   });
 
-  test("End session locks the input and hides the end button", async ({ page }) => {
+  test("End session locks the input and hides the end and mic buttons", async ({ page }) => {
     await page.goto("/hub/pitch-coach");
     await page.locator("[data-testid='pitch-coach-start']").click();
     await page.locator("[data-testid='pitch-coach-end']").click();
     await expect(page.locator("[data-testid='pitch-coach-input']")).toBeDisabled();
     await expect(page.locator("[data-testid='pitch-coach-submit']")).toBeDisabled();
     await expect(page.locator("[data-testid='pitch-coach-end']")).toHaveCount(0);
+    await expect(page.locator("[data-testid='pitch-coach-mic']")).toHaveCount(0);
   });
 });

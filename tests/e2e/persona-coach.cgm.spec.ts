@@ -32,12 +32,13 @@ test.describe("CGM — /hub/persona-coach (AI Persona Coach)", () => {
     await expect(page.locator("[data-testid='persona-card']")).toHaveCount(3);
   });
 
-  test("Start session reveals scripted opener and enables input + end button", async ({ page }) => {
+  test("Start session reveals scripted opener and enables input + mic + end button", async ({ page }) => {
     await page.goto("/hub/persona-coach");
     await page.locator("[data-testid='persona-card'][data-persona-id='marcus-chen']").click();
     await page.locator("[data-testid='persona-coach-start']").click();
     await expect(page.locator("[data-testid='persona-coach-transcript']")).toContainText(/Marcus speaking/);
     await expect(page.locator("[data-testid='persona-coach-input']")).toBeEnabled();
+    await expect(page.locator("[data-testid='persona-coach-mic']")).toBeVisible();
     await expect(page.locator("[data-testid='persona-coach-end']")).toBeVisible();
     await expect(page.locator("[data-testid='persona-coach-change']")).toBeDisabled();
   });
@@ -63,7 +64,7 @@ test.describe("CGM — /hub/persona-coach (AI Persona Coach)", () => {
     await expect(transcript).toContainText(/Walk me through the numbers/);
   });
 
-  test("End session locks the input and hides the end button", async ({ page }) => {
+  test("End session locks the input and hides the end and mic buttons", async ({ page }) => {
     await page.goto("/hub/persona-coach");
     await page.locator("[data-testid='persona-card'][data-persona-id='jamie-doyle']").click();
     await page.locator("[data-testid='persona-coach-start']").click();
@@ -71,5 +72,6 @@ test.describe("CGM — /hub/persona-coach (AI Persona Coach)", () => {
     await expect(page.locator("[data-testid='persona-coach-input']")).toBeDisabled();
     await expect(page.locator("[data-testid='persona-coach-submit']")).toBeDisabled();
     await expect(page.locator("[data-testid='persona-coach-end']")).toHaveCount(0);
+    await expect(page.locator("[data-testid='persona-coach-mic']")).toHaveCount(0);
   });
 });
