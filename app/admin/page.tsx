@@ -1,53 +1,49 @@
-export const metadata = {
-  title: "Admin",
-};
+import Link from "next/link";
+import "./admin.css";
+
+const TOOLS = [
+  {
+    href: "/admin/roadmap",
+    icon: "🗺️",
+    title: "CEO Roadmap",
+    desc: "Phase 1/2/3 build guide. Internal-only — was the original gated landing page.",
+  },
+  {
+    href: "/admin/bible",
+    icon: "🔐",
+    title: "Company Bible CRUD",
+    desc: "Add and edit tools, credentials, and access matrix. Admin-only writes.",
+  },
+];
+
+export const metadata = { title: "Admin" };
 
 export default function AdminHome() {
   return (
-    <main
-      style={{
-        minHeight: "100vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "40px 24px",
-        textAlign: "center",
-      }}
-    >
-      <div style={{ maxWidth: 520 }}>
-        <p
-          style={{
-            fontFamily: "var(--font-dm-mono), monospace",
-            fontSize: 11,
-            letterSpacing: 3,
-            textTransform: "uppercase",
-            color: "var(--gold)",
-            marginBottom: 12,
-          }}
-        >
-          /admin · jordan
+    <main className="admin">
+      <p className="admin__eyebrow">/admin · jordan</p>
+      <header className="admin__header">
+        <h1>Admin</h1>
+        <p>
+          Internal tools for QuadGrowth ops. Manage clients, CGM↔client assignments,
+          and the company Bible. Admin role only.
         </p>
-        <h1
-          style={{
-            fontFamily: "var(--font-playfair), serif",
-            fontSize: 42,
-            color: "var(--cream)",
-            marginBottom: 16,
-            fontWeight: 600,
-          }}
-        >
-          Admin
-        </h1>
-        <p style={{ color: "var(--muted)", lineHeight: 1.6 }}>
-          Internal admin tools — client management, CGM↔client assignments, full
-          Bible CRUD, audit logs. Admin role only (Jordan + you). Supabase RLS
-          enforces access Day 2.
-        </p>
-        <p style={{ marginTop: 32 }}>
-          <a href="/" style={{ color: "var(--gold)" }}>
-            ← Back to roadmap
-          </a>
-        </p>
+      </header>
+      <div className="admin__grid" data-testid="admin-grid">
+        {TOOLS.map((tool) => (
+          <Link
+            key={tool.href}
+            href={tool.href}
+            className="admin__card"
+            data-testid="admin-tool-card"
+          >
+            <div className="admin__card-icon" aria-hidden>
+              {tool.icon}
+            </div>
+            <h2>{tool.title}</h2>
+            <p>{tool.desc}</p>
+          </Link>
+        ))}
       </div>
     </main>
   );
