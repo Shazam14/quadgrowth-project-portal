@@ -1,0 +1,111 @@
+.admin-bible {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 48px 32px 80px;
+}
+
+.admin-bible header h1 {
+  font-size: 2rem;
+  color: var(--cream);
+  margin-bottom: 6px;
+}
+
+.admin-bible header p {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin-bottom: 32px;
+}
+
+.admin-bible h2 {
+  font-size: 1.3rem;
+  color: var(--cream);
+  margin-bottom: 16px;
+  margin-top: 32px;
+}
+
+.admin-bible h3 {
+  font-size: 1rem;
+  color: var(--gold-light);
+  margin: 20px 0 10px;
+  font-family: var(--font-dm-sans);
+  letter-spacing: 0.5px;
+}
+
+.admin-bible__add {
+  background: rgba(200, 150, 62, 0.05);
+  border: 1px solid rgba(200, 150, 62, 0.2);
+  border-radius: 14px;
+  padding: 20px 24px;
+  margin-bottom: 32px;
+}
+
+.admin-bible__form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  align-items: end;
+}
+
+.admin-bible__form--row {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(245, 240, 232, 0.07);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 8px;
+}
+
+.admin-bible__form label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.admin-bible__form span {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: rgba(245, 240, 232, 0.4);
+}
+
+.admin-bible__form input,
+.admin-bible__form select,
+.admin-bible__form textarea {
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(245, 240, 232, 0.1);
+  border-radius: 6px;
+  padding: 7px 10px;
+  color: var(--cream);
+  font-family: var(--font-dm-sans);
+  font-size: 0.85rem;
+  min-width: 0;
+  width: 100%;
+}
+
+.admin-bible__form input:focus,
+.admin-bible__form select:focus,
+.admin-bible__form textarea:focus {
+  outline: none;
+  border-color: var(--gold);
+}
+
+.admin-bible__form button {
+  background: var(--gold);
+  color: var(--navy-dark);
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  font-family: var(--font-dm-sans);
+}
+
+.admin-bible__form button:hover {
+  background: var(--gold-light);
+}
+
+.admin-bible__notes {
+  grid-column: span 2;
+}
