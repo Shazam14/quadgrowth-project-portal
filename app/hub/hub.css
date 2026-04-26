@@ -1,0 +1,71 @@
+.hub {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 56px 32px 80px;
+  color: var(--cream);
+}
+
+.hub__eyebrow {
+  font-family: var(--font-dm-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+
+.hub__header h1 {
+  font-family: var(--font-playfair), serif;
+  font-size: 2.6rem;
+  color: var(--cream);
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.hub__header p {
+  color: var(--muted);
+  max-width: 680px;
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+.hub__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+  margin-top: 40px;
+}
+
+.hub__card {
+  display: block;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(245, 240, 232, 0.08);
+  border-radius: 16px;
+  padding: 22px 20px;
+  text-decoration: none;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.hub__card:hover {
+  border-color: rgba(200, 150, 62, 0.35);
+  transform: translateY(-2px);
+}
+
+.hub__card-icon {
+  font-size: 1.6rem;
+  margin-bottom: 12px;
+}
+
+.hub__card h2 {
+  font-family: var(--font-dm-sans), sans-serif;
+  font-size: 1.05rem;
+  color: var(--cream);
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.hub__card p {
+  color: rgba(245, 240, 232, 0.55);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}

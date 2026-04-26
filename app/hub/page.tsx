@@ -1,53 +1,60 @@
-export const metadata = {
-  title: "Sales Hub",
-};
+import Link from "next/link";
+import "./hub.css";
+
+const TOOLS = [
+  {
+    href: "/hub/flashcards",
+    icon: "💬",
+    title: "Q&A Flashcards",
+    desc: "Discovery, objections, pricing, results, technical — practice the answers.",
+  },
+  {
+    href: "/hub/checklists",
+    icon: "✅",
+    title: "Operational Checklists",
+    desc: "Pre-call prep, onboarding, monthly delivery, weekly lead-gen pipeline.",
+  },
+  {
+    href: "/hub/scripts",
+    icon: "📞",
+    title: "Lead Gen Scripts",
+    desc: "Cold email, follow-ups, cold call openers, discovery framework.",
+  },
+  {
+    href: "/hub/bible",
+    icon: "🔐",
+    title: "Company Bible",
+    desc: "Credentials, team access matrix, security rules. Phase 1 ≤5 people.",
+  },
+];
+
+export const metadata = { title: "Sales Hub" };
 
 export default function HubHome() {
   return (
-    <main
-      style={{
-        minHeight: "100vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "40px 24px",
-        textAlign: "center",
-      }}
-    >
-      <div style={{ maxWidth: 520 }}>
-        <p
-          style={{
-            fontFamily: "var(--font-dm-mono), monospace",
-            fontSize: 11,
-            letterSpacing: 3,
-            textTransform: "uppercase",
-            color: "var(--gold)",
-            marginBottom: 12,
-          }}
-        >
-          /hub
+    <main className="hub">
+      <p className="hub__eyebrow">/hub</p>
+      <header className="hub__header">
+        <h1>Sales Hub</h1>
+        <p>
+          Workspace for Campaign Growth Managers. Pick a tool to begin.
         </p>
-        <h1
-          style={{
-            fontFamily: "var(--font-playfair), serif",
-            fontSize: 42,
-            color: "var(--cream)",
-            marginBottom: 16,
-            fontWeight: 600,
-          }}
-        >
-          Sales Hub
-        </h1>
-        <p style={{ color: "var(--muted)", lineHeight: 1.6 }}>
-          Workspace for Campaign Growth Managers — Q&amp;A, scripts, Mistral pitch
-          coach, Voxtral transcripts, Zadarma call history, and the Company Bible.
-          Migration from `quadgrowth-lead/` lands Day 2–3. CGMs sign up next week.
-        </p>
-        <p style={{ marginTop: 32 }}>
-          <a href="/" style={{ color: "var(--gold)" }}>
-            ← Back to roadmap
-          </a>
-        </p>
+      </header>
+      <div className="hub__grid">
+        {TOOLS.map((tool) => (
+          <Link
+            key={tool.href}
+            href={tool.href}
+            className="hub__card"
+            data-testid="hub-tool-card"
+          >
+            <div className="hub__card-icon" aria-hidden>
+              {tool.icon}
+            </div>
+            <h2>{tool.title}</h2>
+            <p>{tool.desc}</p>
+          </Link>
+        ))}
       </div>
     </main>
   );
