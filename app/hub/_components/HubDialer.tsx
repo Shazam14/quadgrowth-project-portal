@@ -2,10 +2,14 @@
 
 import Script from "next/script";
 
-const SIP_EXTENSION = "444";
-
-export default function HubDialer({ widgetKey }: { widgetKey: string | null }) {
-  if (!widgetKey) return null;
+export default function HubDialer({
+  widgetKey,
+  sipLogin,
+}: {
+  widgetKey: string | null;
+  sipLogin: string | null;
+}) {
+  if (!widgetKey || !sipLogin) return null;
 
   return (
     <>
@@ -22,7 +26,7 @@ export default function HubDialer({ widgetKey }: { widgetKey: string | null }) {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           (window as any).zadarmaWidgetFn?.(
             widgetKey,
-            SIP_EXTENSION,
+            sipLogin,
             "square",
             "en",
             true,

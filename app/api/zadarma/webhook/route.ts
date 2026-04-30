@@ -4,12 +4,13 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const runtime = "nodejs";
 
-// Zadarma signature: base64(hmac_sha1(md5(rawBody), api_secret))
-// Verify on first live hit — if scheme differs, swap here.
+// Zadarma webhook signature: base64( hex( hmac_sha1( md5(rawBody), api_secret ) ) )
+// Matches PHP SDK: hash_hmac returns hex, then base64_encode encodes the hex string.
 function verifySignature(rawBody: string, signature: string): boolean {
   const secret = process.env.ZADARMA_API_SECRET!;
   const bodyMd5 = createHash("md5").update(rawBody).digest("hex");
-  const expected = createHmac("sha1", secret).update(bodyMd5).digest("base64");
+  const hmacHex = createHmac("sha1", secret).update(bodyMd5).digest("hex");
+  const expected = Buffer.from(hmacHex).toString("base64");
   return expected === signature;
 }
 
