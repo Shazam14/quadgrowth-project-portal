@@ -44,6 +44,12 @@ const TOOLS = [
     title: "AI Persona Coach",
     desc: "Live role-play against a tough prospect. Skeptical CFO, defensive director, tyre-kicker.",
   },
+  {
+    href: "/hub/calls",
+    icon: "📞",
+    title: "Call History",
+    desc: "Every Zadarma outbound call — duration, prospect number, recording playback.",
+  },
 ];
 
 export const metadata = { title: "Sales Hub" };
