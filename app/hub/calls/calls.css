@@ -121,6 +121,25 @@
   color: rgba(245, 240, 232, 0.3);
 }
 
+.calls__dial {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 100px;
+  background: rgba(17, 29, 51, 0);
+  color: var(--gold);
+  border: 1px solid rgba(200, 150, 62, 0.4);
+  font-family: var(--font-dm-mono), ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.calls__dial:hover {
+  background: rgba(200, 150, 62, 0.14);
+}
+
 @media (max-width: 720px) {
   .calls__table-wrap {
     overflow-x: auto;

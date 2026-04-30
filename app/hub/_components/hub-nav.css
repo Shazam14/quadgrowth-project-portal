@@ -59,3 +59,64 @@
     padding: 12px 20px;
   }
 }
+
+/* ── Zadarma widget brand overrides ───────────────────────────────────── */
+
+#zdrmWPhI .zdrm-webphone {
+  background: var(--navy) !important;
+  border: 1px solid rgba(200, 150, 62, 0.3) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4) !important;
+}
+
+/* Input row */
+#zdrmWPhI .zdrm-webphone-box {
+  background: var(--navy) !important;
+}
+
+#zdrmWPhI #zdrm-webphone-phonenumber-input {
+  background: var(--navy-dark) !important;
+  color: var(--cream) !important;
+  border: 1px solid rgba(200, 150, 62, 0.25) !important;
+  border-radius: 6px !important;
+}
+
+#zdrmWPhI .zdrm-webphone-placeholder-double,
+#zdrmWPhI .zdrm-webphone-timer,
+#zdrmWPhI .zdrm-webphone-callername {
+  color: rgba(245, 240, 232, 0.45) !important;
+}
+
+/* Call button → gold */
+#zdrmWPhI .zdrm-webphone-call-btn {
+  background: var(--gold) !important;
+  border-radius: 50% !important;
+}
+
+#zdrmWPhI .zdrm-webphone-call-btn:hover {
+  background: var(--gold-light) !important;
+}
+
+/* Numpad */
+#zdrmWPhI .zdrm-webphone-numpad-btn {
+  background: rgba(255,255,255,0.05) !important;
+  color: var(--cream) !important;
+  border-radius: 6px !important;
+}
+
+#zdrmWPhI .zdrm-webphone-numpad-btn:hover {
+  background: rgba(200, 150, 62, 0.18) !important;
+}
+
+#zdrmWPhI .zdrm-webphone-numpad-btn-txt {
+  color: var(--cream) !important;
+}
+
+#zdrmWPhI .zdrm-webphone-numpad-btn-descr {
+  color: rgba(245, 240, 232, 0.4) !important;
+}
+
+/* Numpad toggle icon */
+#zdrmWPhI .zdrm-webphone-numpad {
+  border-top: 1px solid rgba(245, 240, 232, 0.08) !important;
+}

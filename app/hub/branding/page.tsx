@@ -29,7 +29,11 @@ export const metadata = { title: "Brand Kit · QuadGrowth Hub" };
 export default function BrandingPage() {
   return (
     <>
-      <div data-testid="brand-kit" dangerouslySetInnerHTML={{ __html: html }} />
+      <div
+        className="brand-kit-page"
+        data-testid="brand-kit"
+        dangerouslySetInnerHTML={{ __html: html }}
+      />
       <script dangerouslySetInnerHTML={{ __html: script }} />
     </>
   );
