@@ -15,16 +15,22 @@ const TOOLS = [
     desc: "Client-facing dashboard — ROI calculator, live lead feed, and KPIs.",
   },
   {
+    href: "/admin/team",
+    icon: "👥",
+    title: "Team",
+    desc: "View all users and assign roles — CGM, client, or admin.",
+  },
+  {
     href: "/admin/roadmap",
     icon: "🗺️",
-    title: "CEO Roadmap",
-    desc: "Phase 1/2/3 build guide. Internal-only — was the original gated landing page.",
+    title: "Build Roadmap",
+    desc: "Phase 1/2/3 plan for the QuadGrowth platform.",
   },
   {
     href: "/admin/bible",
     icon: "🔐",
-    title: "Company Bible CRUD",
-    desc: "Add and edit tools, credentials, and access matrix. Admin-only writes.",
+    title: "Credentials & Tools",
+    desc: "Manage logins, tools, and access across the business.",
   },
 ];
 
