@@ -21,7 +21,7 @@ const TOOLS = [
     desc: "View all users and assign roles — CGM, client, or admin.",
   },
   {
-    href: "/admin/roadmap",
+    href: "/roadmap",
     icon: "🗺️",
     title: "Build Roadmap",
     desc: "Phase 1/2/3 plan for the QuadGrowth platform.",

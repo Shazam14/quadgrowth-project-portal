@@ -27,7 +27,7 @@ export default async function TeamPage() {
         id: u.id,
         email: u.email ?? "—",
         full_name: p?.full_name ?? null,
-        role: (p?.role ?? "client") as "client" | "cgm" | "admin",
+        role: (p?.role ?? "cgm") as "client" | "cgm" | "admin",
         created_at: u.created_at,
       };
     })

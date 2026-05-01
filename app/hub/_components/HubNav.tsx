@@ -12,6 +12,8 @@ const LINKS = [
   { href: "/hub/bible", label: "Bible" },
   { href: "/hub/branding", label: "Brand Kit" },
   { href: "/hub/calls", label: "Calls" },
+  { href: "/portal", label: "Client Portal" },
+  { href: "/roadmap", label: "Roadmap" },
 ];
 
 export default function HubNav() {

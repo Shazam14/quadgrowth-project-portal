@@ -3,7 +3,7 @@ import path from "node:path";
 import "./roadmap.css";
 
 const roadmapHtml = fs.readFileSync(
-  path.join(process.cwd(), "app/admin/roadmap/_content/roadmap.html"),
+  path.join(process.cwd(), "app/roadmap/_content/roadmap.html"),
   "utf8",
 );
 

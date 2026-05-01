@@ -16,9 +16,10 @@ function requiredRoleForPath(pathname: string): Role | null {
   return null;
 }
 
-// Admin can reach every protected namespace; otherwise role must match.
+// Admin can reach every namespace. CGMs can also access /portal and /roadmap.
 function canAccess(userRole: Role, required: Role): boolean {
   if (userRole === "admin") return true;
+  if (userRole === "cgm" && required === "client") return true;
   return userRole === required;
 }
 
