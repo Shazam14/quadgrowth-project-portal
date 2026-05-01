@@ -3,6 +3,18 @@ import "./admin.css";
 
 const TOOLS = [
   {
+    href: "/hub",
+    icon: "🏠",
+    title: "Sales Hub",
+    desc: "CGM workspace — calls, leads, pitch coach, flashcards, and brand kit.",
+  },
+  {
+    href: "/portal",
+    icon: "📊",
+    title: "Client Portal",
+    desc: "Client-facing dashboard — ROI calculator, live lead feed, and KPIs.",
+  },
+  {
     href: "/admin/roadmap",
     icon: "🗺️",
     title: "CEO Roadmap",
@@ -21,7 +33,7 @@ export const metadata = { title: "Admin" };
 export default function AdminHome() {
   return (
     <main className="admin">
-      <p className="admin__eyebrow">/admin · jordan</p>
+      <p className="admin__eyebrow">/admin</p>
       <header className="admin__header">
         <h1>Admin</h1>
         <p>
