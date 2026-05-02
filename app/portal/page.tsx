@@ -13,7 +13,7 @@ const FEATURES: Feature[] = [
   { label: "Monthly reports", href: "/portal/reports", active: true },
   { label: "Campaign status", href: "/portal/campaigns", active: true },
   { label: "ROI calculator", href: "/portal/roi-calculator", active: true },
-  { label: "Next strategy call" },
+  { label: "Next strategy call", href: "/portal/strategy-calls", active: true },
   { label: "Package & account" },
   { label: "Journey timeline" },
 ];

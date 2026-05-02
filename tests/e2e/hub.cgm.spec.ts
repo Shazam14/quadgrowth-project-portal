@@ -1,10 +1,10 @@
 import { test, expect } from "@playwright/test";
 
 test.describe("CGM — /hub landing", () => {
-  test("renders 9 tool cards linking to flashcards/checklists/scripts/bible/branding/pitch-coach/persona-coach/calls/reports", async ({ page }) => {
+  test("renders 10 tool cards linking to flashcards/checklists/scripts/bible/branding/pitch-coach/persona-coach/calls/reports/strategy-calls", async ({ page }) => {
     await page.goto("/hub");
     const cards = page.locator("[data-testid='hub-tool-card']");
-    await expect(cards).toHaveCount(9);
+    await expect(cards).toHaveCount(10);
     await expect(page.locator("[data-testid='hub-tool-card'][href='/hub/flashcards']")).toBeVisible();
     await expect(page.locator("[data-testid='hub-tool-card'][href='/hub/checklists']")).toBeVisible();
     await expect(page.locator("[data-testid='hub-tool-card'][href='/hub/scripts']")).toBeVisible();
@@ -14,5 +14,6 @@ test.describe("CGM — /hub landing", () => {
     await expect(page.locator("[data-testid='hub-tool-card'][href='/hub/persona-coach']")).toBeVisible();
     await expect(page.locator("[data-testid='hub-tool-card'][href='/hub/calls']")).toBeVisible();
     await expect(page.locator("[data-testid='hub-tool-card'][href='/hub/reports']")).toBeVisible();
+    await expect(page.locator("[data-testid='hub-tool-card'][href='/hub/strategy-calls']")).toBeVisible();
   });
 });

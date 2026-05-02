@@ -13,7 +13,8 @@
     "seed": "tsx scripts/seed-bible.mts",
     "seed:leads": "tsx scripts/seed-leads.mts",
     "seed:campaigns": "tsx scripts/seed-campaigns.mts",
-    "seed:reports": "tsx scripts/seed-monthly-reports.mts"
+    "seed:reports": "tsx scripts/seed-monthly-reports.mts",
+    "seed:strategy-calls": "tsx scripts/seed-strategy-calls.mts"
   },
   "dependencies": {
     "@ai-sdk/google": "^3.0.64",

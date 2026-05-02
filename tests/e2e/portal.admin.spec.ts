@@ -8,21 +8,22 @@ test.describe("Portal — /portal hero", () => {
     await expect(page.locator("h1")).toContainText("always visible");
     await expect(page.locator("[data-testid='portal-badge']")).toContainText(/Phase 1B/i);
     await expect(page.locator("[data-testid='portal-progress']")).toBeVisible();
-    await expect(page.locator("[data-testid='portal-progress']")).toContainText("5 of 8");
+    await expect(page.locator("[data-testid='portal-progress']")).toContainText("6 of 8");
     const pills = page.locator("[data-testid='portal-pill']");
     await expect(pills).toHaveCount(8);
   });
 
-  test("KPI + Leads + Reports + Campaigns + ROI are the active pills", async ({ page }) => {
+  test("KPI + Leads + Reports + Campaigns + ROI + Next strategy call are the active pills", async ({ page }) => {
     await page.goto("/portal");
     const active = page.locator("[data-testid='portal-pill'][data-active='true']");
-    await expect(active).toHaveCount(5);
+    await expect(active).toHaveCount(6);
     await expect(active).toContainText([
       "KPI dashboard",
       "Live lead feed",
       "Monthly reports",
       "Campaign status",
       "ROI calculator",
+      "Next strategy call",
     ]);
   });
 
@@ -81,10 +82,21 @@ test.describe("Portal — /portal hero", () => {
     await expect(page.locator("[data-testid='reports-page']")).toBeVisible();
   });
 
-  test("the other 3 pills are tagged Soon (not links)", async ({ page }) => {
+  test("Next strategy call pill links to /portal/strategy-calls", async ({ page }) => {
+    await page.goto("/portal");
+    await page
+      .locator("[data-testid='portal-pill'][data-active='true']", {
+        hasText: "Next strategy call",
+      })
+      .click();
+    await expect(page).toHaveURL(/\/portal\/strategy-calls/);
+    await expect(page.locator("[data-testid='strategy-calls-page']")).toBeVisible();
+  });
+
+  test("the other 2 pills are tagged Soon (not links)", async ({ page }) => {
     await page.goto("/portal");
     const soon = page.locator("[data-testid='portal-pill'][data-active='false']");
-    await expect(soon).toHaveCount(3);
+    await expect(soon).toHaveCount(2);
     await expect(soon.first()).toContainText("Soon");
   });
 });

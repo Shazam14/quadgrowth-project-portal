@@ -56,6 +56,12 @@ const TOOLS = [
     title: "Monthly Reports",
     desc: "Write the monthly summary for each clinic — three wins, one challenge, next month's focus.",
   },
+  {
+    href: "/hub/strategy-calls",
+    icon: "📅",
+    title: "Strategy Calls",
+    desc: "Schedule the next monthly check-in for each clinic and log the recap once it's done.",
+  },
 ];
 
 export const metadata = { title: "Sales Hub" };
