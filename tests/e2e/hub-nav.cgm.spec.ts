@@ -16,7 +16,7 @@ test.describe("HubNav — sticky nav across /hub/*", () => {
       const nav = page.locator("[data-testid='hub-nav']");
       await expect(nav).toBeVisible();
       await expect(nav).toHaveCSS("position", "sticky");
-      await expect(nav.locator("a")).toHaveCount(9);
+      await expect(nav.locator("a")).toHaveCount(10);
       const active = nav.locator("a[aria-current='page']");
       await expect(active).toHaveCount(1);
       await expect(active).toHaveAttribute("href", activeHref);

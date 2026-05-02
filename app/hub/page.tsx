@@ -50,6 +50,12 @@ const TOOLS = [
     title: "Call History",
     desc: "Every Zadarma outbound call — duration, prospect number, recording playback.",
   },
+  {
+    href: "/hub/reports",
+    icon: "📝",
+    title: "Monthly Reports",
+    desc: "Write the monthly summary for each clinic — three wins, one challenge, next month's focus.",
+  },
 ];
 
 export const metadata = { title: "Sales Hub" };

@@ -8,18 +8,19 @@ test.describe("Portal — /portal hero", () => {
     await expect(page.locator("h1")).toContainText("always visible");
     await expect(page.locator("[data-testid='portal-badge']")).toContainText(/Phase 1B/i);
     await expect(page.locator("[data-testid='portal-progress']")).toBeVisible();
-    await expect(page.locator("[data-testid='portal-progress']")).toContainText("4 of 8");
+    await expect(page.locator("[data-testid='portal-progress']")).toContainText("5 of 8");
     const pills = page.locator("[data-testid='portal-pill']");
     await expect(pills).toHaveCount(8);
   });
 
-  test("KPI dashboard + Live lead feed + ROI calculator + Campaign status are the active pills", async ({ page }) => {
+  test("KPI + Leads + Reports + Campaigns + ROI are the active pills", async ({ page }) => {
     await page.goto("/portal");
     const active = page.locator("[data-testid='portal-pill'][data-active='true']");
-    await expect(active).toHaveCount(4);
+    await expect(active).toHaveCount(5);
     await expect(active).toContainText([
       "KPI dashboard",
       "Live lead feed",
+      "Monthly reports",
       "Campaign status",
       "ROI calculator",
     ]);
@@ -69,10 +70,21 @@ test.describe("Portal — /portal hero", () => {
     await expect(page.locator("[data-testid='campaigns-page']")).toBeVisible();
   });
 
-  test("the other 4 pills are tagged Soon (not links)", async ({ page }) => {
+  test("Monthly reports pill links to /portal/reports", async ({ page }) => {
+    await page.goto("/portal");
+    await page
+      .locator("[data-testid='portal-pill'][data-active='true']", {
+        hasText: "Monthly reports",
+      })
+      .click();
+    await expect(page).toHaveURL(/\/portal\/reports/);
+    await expect(page.locator("[data-testid='reports-page']")).toBeVisible();
+  });
+
+  test("the other 3 pills are tagged Soon (not links)", async ({ page }) => {
     await page.goto("/portal");
     const soon = page.locator("[data-testid='portal-pill'][data-active='false']");
-    await expect(soon).toHaveCount(4);
+    await expect(soon).toHaveCount(3);
     await expect(soon.first()).toContainText("Soon");
   });
 });

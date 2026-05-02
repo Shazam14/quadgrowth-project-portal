@@ -101,7 +101,16 @@ setup("authenticate as admin", async ({ page }) => {
 });
 
 setup("authenticate as cgm", async ({ page }) => {
-  await ensureUser(CGM_EMAIL, "cgm", "Demo CGM");
+  const demoClientId = await getDemoClientId(CLIENT_DEMO_SLUG);
+  const cgmId = await ensureUser(CGM_EMAIL, "cgm", "Demo CGM");
+  // Idempotently assign demo CGM to demo-practice so RLS-scoped reads work.
+  const { error: assignErr } = await admin
+    .from("client_assignments")
+    .upsert(
+      { cgm_id: cgmId, client_id: demoClientId },
+      { onConflict: "cgm_id,client_id", ignoreDuplicates: true },
+    );
+  if (assignErr) throw assignErr;
   await saveAuthFor(page, CGM_EMAIL, CGM_AUTH_FILE);
   await page.goto("/hub");
   await expect(page).toHaveURL(/\/hub/);
