@@ -11,7 +11,8 @@
     "test:e2e": "playwright test",
     "test:setup": "playwright test --project=setup",
     "seed": "tsx scripts/seed-bible.mts",
-    "seed:leads": "tsx scripts/seed-leads.mts"
+    "seed:leads": "tsx scripts/seed-leads.mts",
+    "seed:campaigns": "tsx scripts/seed-campaigns.mts"
   },
   "dependencies": {
     "@ai-sdk/google": "^3.0.64",

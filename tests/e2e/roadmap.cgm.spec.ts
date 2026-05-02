@@ -1,9 +1,10 @@
 import { test, expect } from "@playwright/test";
 
-test.describe("CGM — /admin/roadmap (blocked)", () => {
-  test("cgm is bounced from /admin/roadmap", async ({ page }) => {
-    await page.goto("/admin/roadmap");
-    // Middleware sends non-admins to their role home (/hub for cgm)
-    await expect(page).not.toHaveURL(/\/admin\/roadmap/);
+test.describe("Roadmap — /roadmap", () => {
+  test("cgm can view the roadmap with full content", async ({ page }) => {
+    await page.goto("/roadmap");
+    await expect(page).toHaveURL(/\/roadmap/);
+    const body = page.locator("body");
+    await expect(body).toContainText("Phase 1");
   });
 });
