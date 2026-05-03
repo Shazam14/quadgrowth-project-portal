@@ -15,7 +15,7 @@ const FEATURES: Feature[] = [
   { label: "ROI calculator", href: "/portal/roi-calculator", active: true },
   { label: "Next strategy call", href: "/portal/strategy-calls", active: true },
   { label: "Journey timeline", href: "/portal/journey", active: true },
-  { label: "Package & account" },
+  { label: "Package & account", href: "/portal/package", active: true },
 ];
 
 const SHIPPED = FEATURES.filter((f) => f.active).length;

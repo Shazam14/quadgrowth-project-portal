@@ -15,6 +15,7 @@ const LINKS = [
   { href: "/hub/reports", label: "Reports" },
   { href: "/hub/strategy-calls", label: "Strategy Calls" },
   { href: "/hub/journey", label: "Journey" },
+  { href: "/hub/package", label: "Package" },
   { href: "/portal", label: "Client Portal" },
   { href: "/roadmap", label: "Roadmap" },
 ];

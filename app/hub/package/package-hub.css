@@ -1,0 +1,222 @@
+.pkg-hub {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 56px 32px 80px;
+  color: var(--cream);
+}
+
+.pkg-hub__eyebrow {
+  font-family: var(--font-dm-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+
+.pkg-hub__header h1 {
+  font-family: var(--font-playfair), serif;
+  font-size: 2.4rem;
+  color: var(--cream);
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.pkg-hub__header p {
+  color: var(--muted);
+  max-width: 640px;
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+.pkg-hub__notice {
+  margin-top: 12px;
+  font-family: var(--font-dm-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.pkg-hub__empty {
+  margin-top: 32px;
+  padding: 24px;
+  border: 1px dashed rgba(245, 240, 232, 0.18);
+  border-radius: 14px;
+  background: var(--navy);
+  color: var(--muted);
+  text-align: center;
+}
+
+.pkg-hub__list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 36px;
+}
+
+.pkg-hub__row {
+  padding: 24px 28px;
+  border: 1px solid rgba(245, 240, 232, 0.08);
+  border-radius: 14px;
+  background: var(--navy);
+}
+
+.pkg-hub__row[data-tier="growth"] {
+  border-color: rgba(200, 150, 62, 0.32);
+}
+
+.pkg-hub__row[data-tier="scale"] {
+  border-color: rgba(200, 150, 62, 0.5);
+}
+
+.pkg-hub__row-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(245, 240, 232, 0.08);
+}
+
+.pkg-hub__row-head h2 {
+  font-family: var(--font-playfair), serif;
+  font-size: 1.2rem;
+  color: var(--cream);
+  margin: 0;
+  font-weight: 600;
+}
+
+.pkg-hub__row-tier {
+  font-family: var(--font-dm-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.pkg-hub__row[data-tier="growth"] .pkg-hub__row-tier,
+.pkg-hub__row[data-tier="scale"] .pkg-hub__row-tier {
+  color: var(--gold);
+}
+
+.pkg-hub__form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pkg-hub__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+}
+
+.pkg-hub__form label,
+.pkg-hub__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-family: var(--font-dm-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+}
+
+.pkg-hub__form input,
+.pkg-hub__form select,
+.pkg-hub__form textarea {
+  font-family: inherit;
+  font-size: 14px;
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--cream);
+  background: rgba(245, 240, 232, 0.04);
+  border: 1px solid rgba(245, 240, 232, 0.12);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+.pkg-hub__form input:focus,
+.pkg-hub__form select:focus,
+.pkg-hub__form textarea:focus {
+  outline: none;
+  border-color: var(--gold);
+  background: rgba(245, 240, 232, 0.06);
+}
+
+.pkg-hub__form textarea {
+  resize: vertical;
+  min-height: 64px;
+}
+
+.pkg-hub__actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 4px;
+}
+
+.pkg-hub__btn {
+  font-family: var(--font-dm-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: 1px solid var(--gold);
+  background: var(--gold);
+  color: var(--navy);
+  cursor: pointer;
+}
+
+.pkg-hub__btn:hover {
+  filter: brightness(1.05);
+}
+
+.pkg-hub__readonly {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin: 0;
+}
+
+.pkg-hub__readonly > div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pkg-hub__readonly dt {
+  font-family: var(--font-dm-mono), ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.pkg-hub__readonly dd {
+  margin: 0;
+  color: var(--cream);
+  font-size: 14px;
+}
+
+.pkg-hub__readonly-notes {
+  grid-column: 1 / -1;
+}
+
+.pkg-hub__readonly-notes dd {
+  color: var(--muted);
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+@media (max-width: 720px) {
+  .pkg-hub__grid,
+  .pkg-hub__readonly {
+    grid-template-columns: 1fr;
+  }
+}

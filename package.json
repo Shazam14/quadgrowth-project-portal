@@ -15,7 +15,8 @@
     "seed:campaigns": "tsx scripts/seed-campaigns.mts",
     "seed:reports": "tsx scripts/seed-monthly-reports.mts",
     "seed:strategy-calls": "tsx scripts/seed-strategy-calls.mts",
-    "seed:journey": "tsx scripts/seed-journey.mts"
+    "seed:journey": "tsx scripts/seed-journey.mts",
+    "seed:package": "tsx scripts/seed-package.mts"
   },
   "dependencies": {
     "@ai-sdk/google": "^3.0.64",

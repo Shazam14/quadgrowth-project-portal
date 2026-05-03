@@ -68,6 +68,12 @@ const TOOLS = [
     title: "Journey Timeline",
     desc: "Track each clinic's engagement arc — discovery, audit, launch, optimisation cycles.",
   },
+  {
+    href: "/hub/package",
+    icon: "💼",
+    title: "Package & Account",
+    desc: "Plan tier, billing contact, and renewal date for each clinic. Admin owns edits.",
+  },
 ];
 
 export const metadata = { title: "Sales Hub" };
