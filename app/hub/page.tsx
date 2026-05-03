@@ -62,6 +62,12 @@ const TOOLS = [
     title: "Strategy Calls",
     desc: "Schedule the next monthly check-in for each clinic and log the recap once it's done.",
   },
+  {
+    href: "/hub/journey",
+    icon: "🗺️",
+    title: "Journey Timeline",
+    desc: "Track each clinic's engagement arc — discovery, audit, launch, optimisation cycles.",
+  },
 ];
 
 export const metadata = { title: "Sales Hub" };

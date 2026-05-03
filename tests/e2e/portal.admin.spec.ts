@@ -8,15 +8,15 @@ test.describe("Portal — /portal hero", () => {
     await expect(page.locator("h1")).toContainText("always visible");
     await expect(page.locator("[data-testid='portal-badge']")).toContainText(/Phase 1B/i);
     await expect(page.locator("[data-testid='portal-progress']")).toBeVisible();
-    await expect(page.locator("[data-testid='portal-progress']")).toContainText("6 of 8");
+    await expect(page.locator("[data-testid='portal-progress']")).toContainText("7 of 8");
     const pills = page.locator("[data-testid='portal-pill']");
     await expect(pills).toHaveCount(8);
   });
 
-  test("KPI + Leads + Reports + Campaigns + ROI + Next strategy call are the active pills", async ({ page }) => {
+  test("KPI + Leads + Reports + Campaigns + ROI + Next strategy call + Journey timeline are the active pills", async ({ page }) => {
     await page.goto("/portal");
     const active = page.locator("[data-testid='portal-pill'][data-active='true']");
-    await expect(active).toHaveCount(6);
+    await expect(active).toHaveCount(7);
     await expect(active).toContainText([
       "KPI dashboard",
       "Live lead feed",
@@ -24,6 +24,7 @@ test.describe("Portal — /portal hero", () => {
       "Campaign status",
       "ROI calculator",
       "Next strategy call",
+      "Journey timeline",
     ]);
   });
 
@@ -93,10 +94,21 @@ test.describe("Portal — /portal hero", () => {
     await expect(page.locator("[data-testid='strategy-calls-page']")).toBeVisible();
   });
 
-  test("the other 2 pills are tagged Soon (not links)", async ({ page }) => {
+  test("Journey timeline pill links to /portal/journey", async ({ page }) => {
+    await page.goto("/portal");
+    await page
+      .locator("[data-testid='portal-pill'][data-active='true']", {
+        hasText: "Journey timeline",
+      })
+      .click();
+    await expect(page).toHaveURL(/\/portal\/journey/);
+    await expect(page.locator("[data-testid='journey-page']")).toBeVisible();
+  });
+
+  test("the other 1 pill is tagged Soon (not link)", async ({ page }) => {
     await page.goto("/portal");
     const soon = page.locator("[data-testid='portal-pill'][data-active='false']");
-    await expect(soon).toHaveCount(2);
+    await expect(soon).toHaveCount(1);
     await expect(soon.first()).toContainText("Soon");
   });
 });
