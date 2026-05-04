@@ -1,6 +1,6 @@
 import { getWebRtcKey } from "@/lib/zadarma";
 import HubDialer from "./_components/HubDialer";
-import HubNav from "./_components/HubNav";
+import HubSubHeader from "./_components/HubSubHeader";
 
 export default async function HubLayout({ children }: { children: React.ReactNode }) {
   const widgetKey = await getWebRtcKey();
@@ -8,7 +8,7 @@ export default async function HubLayout({ children }: { children: React.ReactNod
 
   return (
     <>
-      <HubNav />
+      <HubSubHeader />
       {children}
       <HubDialer widgetKey={widgetKey} sipLogin={sipLogin} />
     </>

@@ -76,6 +76,19 @@ const TOOLS = [
   },
 ];
 
+const LINKED_SURFACES = [
+  {
+    href: "/portal",
+    label: "Client Portal",
+    desc: "What clients see — KPIs, lead feed, reports, journey.",
+  },
+  {
+    href: "/roadmap",
+    label: "Roadmap",
+    desc: "Public product roadmap.",
+  },
+];
+
 export const metadata = { title: "Sales Hub" };
 
 export default function HubHome() {
@@ -104,6 +117,24 @@ export default function HubHome() {
           </Link>
         ))}
       </div>
+      <section className="hub__linked" aria-label="Linked surfaces">
+        <p className="hub__linked-eyebrow">Linked surfaces</p>
+        <div className="hub__linked-row">
+          {LINKED_SURFACES.map((surface) => (
+            <Link
+              key={surface.href}
+              href={surface.href}
+              className="hub__linked-card"
+              data-testid="hub-linked-surface"
+            >
+              <span className="hub__linked-label">
+                {surface.label} <span aria-hidden>→</span>
+              </span>
+              <span className="hub__linked-desc">{surface.desc}</span>
+            </Link>
+          ))}
+        </div>
+      </section>
     </main>
   );
 }
